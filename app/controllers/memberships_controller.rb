@@ -1,7 +1,9 @@
 class MembershipsController < InternalController
   #before_action :find_and_set_user
   before_action :find_and_set_project
-  before_action :set_membership, only: [:show, :edit, :update, :destroy]
+  before_action :set_membership, only: [ :show, :edit, :update, :destroy]
+  before_action :project_auth, only: [:create, :edit, :update, :destroy]
+
 
   def index
     @memberships = @project.memberships
@@ -57,5 +59,18 @@ class MembershipsController < InternalController
   def owner_count(project)
     project.memberships.where(role:1).count
   end
+
+
+    def project_auth
+      unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
+
+        flash[:danger] = "You do not have access"
+        redirect_to projects_path
+      end
+
+
+    end
+
+
 
 end
