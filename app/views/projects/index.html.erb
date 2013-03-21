@@ -18,12 +18,18 @@
     <th>Name</th>
     <th>Tasks</th>
   </thead>
+  <% user_projects = [] %>
   <% @projects.each do |r| %>
-  <tr>
-    <td> <%= link_to r.name, project_path(r) %>  </td>
-    <td> <%= link_to r.tasks.count, project_tasks_path(r) %></td>
-    <!-- <td> < %= link_to r.memberships.count, project_memberships_path(r) %></td> -->
+    <% r.users.cycle(1) {|x| if x.id == current_user.id
+      user_projects<< r
+    end} %>
+  <% end %>
 
+  <%user_projects.each do |user_project| %>
+  <tr>
+    <td> <%= link_to "#{user_project.name}", project_path(user_project) %> </td>
+    <td> <%= user_project.tasks.count %> </td>
   </tr>
   <% end %>
+
 </table>

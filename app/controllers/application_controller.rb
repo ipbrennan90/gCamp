@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   helper :all
-  helper_method :current_user, :auth, :find_and_set_project, :find_and_set_user
+  helper_method :current_user, :auth
 
   def current_user
     if session[:user_id].present?
@@ -16,14 +16,6 @@ class ApplicationController < ActionController::Base
       redirect_to sign_in_path
       flash[:danger] = "You must sign in"
     end
-  end
-
-  def find_and_set_project
-    @project = Project.find(params[:project_id])
-  end
-
-  def find_and_set_user
-    @user = User.find(params[:user_id])
   end
 
 

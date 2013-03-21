@@ -1,4 +1,4 @@
-class ProjectsController < ApplicationController
+class ProjectsController < InternalController
   before_action :auth
   before_action :find_and_set_project, only: [:edit, :show, :update]
 
@@ -11,10 +11,12 @@ class ProjectsController < ApplicationController
   end
 
   def create
+    @user=current_user
     @project=Project.new(project_params)
     if @project.save
       flash[:success] = "Project was successfully created"
-      redirect_to projects_path
+      redirect_to project_tasks_path(@project)
+      @project.memberships.create!(role: 1, user_id: @user.id)
     else
       render :new
     end

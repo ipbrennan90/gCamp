@@ -1,4 +1,4 @@
-class RegistrationController < ApplicationController
+class RegistrationController < InternalController
 
   def new
     @user= User.new
@@ -9,7 +9,7 @@ class RegistrationController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = "You have successfully signed up"
-      redirect_to root_path
+      redirect_to projects_path
     else
       render :new
     end

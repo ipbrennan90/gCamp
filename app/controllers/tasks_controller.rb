@@ -1,4 +1,4 @@
-class TasksController < ApplicationController
+class TasksController < InternalController
   before_action :find_and_set_project
   before_action :auth
   before_action :set_task, only: [:show, :edit, :update, :destroy]

@@ -1,4 +1,4 @@
-class MembershipsController < ApplicationController
+class MembershipsController < InternalController
   #before_action :find_and_set_user
   before_action :find_and_set_project
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
