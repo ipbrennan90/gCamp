@@ -9,9 +9,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    flash[:notice]="User was successfully created"
+
     @user=User.new(user_params)
     if @user.save
+      flash[:notice]="User was successfully created"
       redirect_to users_path
     else
       render :new
