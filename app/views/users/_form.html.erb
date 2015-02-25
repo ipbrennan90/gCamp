@@ -1,21 +1,6 @@
 
   <%= form_for @user, html: {class: "form-horizontal"} do |u| %>
-  <% if @user.errors.any? %>
-    <div class = "form-group">
-      <div class = "col-sm-offset-2 col-sm-6">
-        <div class = "alert alert-danger">
-
-            <h3><%= pluralize(@user.errors.count, "error")%>  prohibited this from being saved : </h3>
-              <ul>
-                <% @user.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <%= render partial: "shared/errors", locals: {object: @user} %>
 
   <div class = "form-group">
     <div class = "col-sm-2">
