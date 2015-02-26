@@ -19,7 +19,7 @@
   </thead>
   <% @projects.each do |r| %>
   <tr>
-    <td> <%= link_to r.name, project_path(r) %>  <%= link_to "Delete", project_path(r), method: :delete %> </td>
+    <td> <%= link_to r.name, project_path(r) %>  </td>
   </tr>
   <% end %>
 </table>
