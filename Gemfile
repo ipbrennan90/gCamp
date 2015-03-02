@@ -1,5 +1,12 @@
 source 'https://rubygems.org'
 
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'launchy'
+  gem 'capybara'
+end
+
+
 gem 'rails_12factor', '~> 0.0.3', group: :production
 gem 'bootstrap-sass', '~> 3.3.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
