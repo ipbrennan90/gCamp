@@ -23,6 +23,18 @@
       <%= flash[:notice] %>
     </div>
   <%end%>
+  <% if current_user %>
+    <p> Current user is: <%= "#{current_user.first_name} #{current_user.last_name}" %></p>
+    <%= link_to "Sign out", sign_out_path %>
+  <% else %>
+    <%= link_to "Sign in", sign_in_path %>
+    <%= link_to "Sign Up", sign_up_path %>
+
+  <% end %>
+
+
+
+
 <%= yield %>
 
   <footer>

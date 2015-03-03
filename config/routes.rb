@@ -7,6 +7,13 @@ Rails.application.routes.draw do
   get 'terms', to: 'terms#index'
   get 'about', to: 'about#index'
   get 'faq', to: 'faq#index'
+
+  get 'sign-up', to: 'registration#new'
+  post 'sign-up', to: 'registration#create'
+  get 'sign-in', to: 'authentication#new'
+  post 'sign-in', to: 'authentication#create'
+  get 'sign-out', to: 'authentication#destroy'
+  
   resources :tasks
   resources :users
   resources :projects

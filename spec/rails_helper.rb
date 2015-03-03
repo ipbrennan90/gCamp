@@ -4,6 +4,8 @@ require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
+
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -48,4 +50,17 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+end
+def new_user
+  @user1 = User.create(first_name: 'first', last_name: 'last', email: 'email@mail.com',
+  password: 'securepass')
+end
+def sign_in
+  new_user
+  visit root_path
+  click_on 'Sign in'
+  expect(current_path).to eq sign_in_path
+  fill_in :email, with: @user1.email
+  fill_in :password, with: @user1.password
+  within("form") {click_on 'Sign in'}
 end

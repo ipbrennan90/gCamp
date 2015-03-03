@@ -13,5 +13,4 @@ describe Task do
     task = Task.create(description: "", due_date: '2015-03-04')
     expect(task.errors[:description]).to include("can't be blank")
   end
-
 end

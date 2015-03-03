@@ -27,7 +27,8 @@ require 'rails_helper'
       click_on 'Edit'
       fill_in :task_description, with: 'Newer Task'
       click_on 'Update Task'
-      expect(page).to have_content('Task was successfully updated. Newer Task')
+      expect(page).to have_content('Task was successfully updated.')
+      expect(page).to have_content('Newer Task')
 
     end
 
