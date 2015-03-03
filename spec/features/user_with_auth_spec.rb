@@ -15,7 +15,7 @@ require 'rails_helper'
       fill_in :user_email, with: 'email1@email1.com'
       fill_in :user_password, with: 'securepass1'
       fill_in :user_password_confirmation, with: 'securepass1'
-      click_on 'Sign up'
+      within("form") { click_on 'Sign up' }
       expect(current_path).to eq '/'
       expect(page).to have_content("You have successfully signed up")
       expect(page).to have_content('first1 last1')
