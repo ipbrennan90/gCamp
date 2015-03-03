@@ -51,10 +51,15 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 end
+def new_project
+  @project1 = Project.create(name: 'Test Project')
+end
+
 def new_user
   @user1 = User.create(first_name: 'first', last_name: 'last', email: 'email@mail.com',
   password: 'securepass')
 end
+
 def sign_in
   new_user
   visit root_path
