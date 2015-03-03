@@ -1,39 +1,39 @@
-  <h1 class = "page-header">
-      Users
-      <div class = "pull-right">
-        <%= link_to "New User", new_user_path, class: "btn btn-info" %>
-      </div>
-  </h1>
+<h1 class = "page-header">
+  Users
+  <div class = "pull-right">
+    <%= link_to "New User", new_user_path, class: "btn btn-info" %>
+  </div>
+</h1>
 
 
 
 
-    <table class = "table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th></th>
-        </tr>
-      </thead>
-      <% @users.each do |u| %>
+<table class = "table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  </thead>
+  <% @users.each do |u| %>
 
-        <tr>
-          <td>
-            <%=link_to u.first_name+" "+u.last_name, user_path(u) %>
-          </td>
-          <td>
-            <%= mail_to u.email %>
-          </td>
+    <tr>
+      <td>
+        <%=link_to u.first_name+" "+u.last_name, user_path(u) %>
+      </td>
+      <td>
+        <%= mail_to u.email %>
+      </td>
 
-          <td>
-            <div class = "pull-right">
-              <%= link_to 'Edit', edit_user_path(u) %>
-            </div>
-          </td>
+      <td>
+        <div class = "pull-right">
+          <%= link_to 'Edit', edit_user_path(u) %>
+        </div>
+      </td>
 
-      </tr>
+  </tr>
 
 
-      <% end %>
-  </table>
+  <% end %>
+</table>

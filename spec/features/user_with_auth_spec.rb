@@ -31,7 +31,6 @@ require 'rails_helper'
       expect(page).to have_content('Tasks')
       click_on 'Users'
       expect(page).to have_content('Users')
-
     end
 
 
@@ -42,8 +41,6 @@ require 'rails_helper'
       expect(page).to have_content('You have successfully logged out Sign in ')
       expect(page).to have_no_content('Sign out')
       expect(current_path).to eq '/'
-
-
     end
 
     scenario 'Users can sign in with valid credentials' do
@@ -55,7 +52,6 @@ require 'rails_helper'
     scenario 'Users cannot sign in with invalid credentials' do
       @user1.update_attributes(password: 'differentpassword' )
       sign_in
-
       expect(page).to have_content("Email / Password combination is invalid")
       expect(current_path).to eq '/sign-in'
     end

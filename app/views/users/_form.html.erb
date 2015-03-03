@@ -1,34 +1,26 @@
-
-  <%= form_for @user, html: {class: "form-horizontal"} do |u| %>
+<%= form_for @user, html: {class: "form-horizontal"} do |u| %>
   <%= render partial: "shared/errors", locals: {object: @user} %>
 
-  <div class = "form-group">
-    <div class = "col-sm-2">
-      <%= u.label :first_name, class: "control-label" %>
-    </div>
-    <div class = "col-sm-4">
-      <%= u.text_field :first_name, class: "form-control " %>
-    </div>
-  </div>
+<!-- Differences -->
+<!-- 1. argument to label and text_field -->
+<!-- 2. text_field VS email_field -->
 
-  <div class = "form-group">
-    <div class = "col-sm-2">
-      <%= u.label :last_name, class: "control-label" %>
-    </div>
-    <div class = "col-sm-4">
-      <%= u.text_field :last_name, class: "form-control " %>
-    </div>
-  </div>
+  <% labels_and_field_types = {
+      first_name: :text_field,
+      last_name: :text_field,
+      email: :email_field
+    } %>
 
-  <div class = "form-group">
-    <div class = "col-sm-2">
-      <%= u.label :email, class: "control-label" %>
+  <% labels_and_field_types.each do |label, field_type| %>
+    <div class="form-group">
+      <div class="col-sm-2">
+        <%= u.label label, class: "control-label" %>
+      </div>
+      <div class="col-sm-4">
+        <%= u.send(field_type, label, class: 'form-control') %>
+      </div>
     </div>
-    <div class = "col-sm-4">
-      <%= u.email_field :email, class: "form-control " %>
-    </div>
-  </div>
-
+  <% end %>
 
   <div class = "form-group">
     <div class="col-sm-offset-2 col-sm-10">
@@ -37,22 +29,14 @@
 
     </div>
   </div>
+<% end %>
 
-
-
-
-
-
-  <% end %>
-  <%if params[:action] == "edit" %>
+<% if params[:action] == "edit" %>
   <div class = "row">
       <div class = "col-sm-offset-2 col-sm-4">
         <div class = "well text-center">
-
-
-            <%= link_to "Delete User", user_path(@user), method: :delete,data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
-
+          <%= link_to "Delete User", user_path(@user), method: :delete,data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
         </div>
       </div>
   </div>
-  <% end %>
+<% end %>

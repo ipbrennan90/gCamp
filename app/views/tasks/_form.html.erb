@@ -1,37 +1,32 @@
 
 <%= form_for @task, html: {class: "form-horizontal"} do |f|  %>
 
-    <%= render partial: "shared/errors", locals: {object: @task} %>
-    <div class="form-group">
-      <div class="col-sm-2 control-label">
-        <%= f.label :description %>
-      </div>
-      <div class="col-sm-4">
-          <%= f.text_field :description, class: "form-control" %>
-      </div>
+  <%= render partial: "shared/errors", locals: {object: @task} %>
+  <div class="form-group">
+    <div class="col-sm-2 control-label">
+      <%= f.label :description %>
     </div>
-
-    <div class="form-group">
-      <div class="col-sm-2 control-label">
-        <%= f.label :due_date %>
-      </div>
-      <div class="col-sm-2">
-          <%= f.date_field :due_date, class: "form-control" %>
-      </div>
+    <div class="col-sm-4">
+        <%= f.text_field :description, class: "form-control" %>
     </div>
-
-
-
-    <% unless @task.new_record?  %>
-
-    <div class = "form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <%= f.check_box :completed %>
-        <%= f.label :completed %>
-      </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-2 control-label">
+      <%= f.label :due_date %>
     </div>
+    <div class="col-sm-2">
+        <%= f.date_field :due_date, class: "form-control" %>
+    </div>
+  </div>
+  <% unless @task.new_record?  %>
+  <div class = "form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.check_box :completed %>
+      <%= f.label :completed %>
+    </div>
+  </div>
 
-    <% end %>
+<% end %>
 
 
 

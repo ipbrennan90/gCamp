@@ -2,78 +2,74 @@
 
 
 
-  <div class="jumbotron">
-    <h1>gCamp</h1>
-    <br></br>
-    <p>Your life, organized</p>
+<div class="jumbotron">
+  <h1>gCamp</h1>
+  <br></br>
+  <p>Your life, organized</p>
 
   </div>
 
   <div class="row">
-    <div class="col-md-4">
-      <%= image_tag("tablet.jpg", class:"img-responsive") %>
-      <p class="lead"></p>
-    </div>
-
-    <div class="col-md-4">
-      <%= image_tag("writing.jpg", class:"img-responsive") %>
-      <p class="lead"></p>
-    </div>
-
-    <div class="col-md-4">
-      <%= image_tag("distress.jpg", class:"img-responsive") %>
-      <p class="lead"></p>
-    </div>
+  <div class="col-md-4">
+    <%= image_tag("tablet.jpg", class:"img-responsive") %>
+    <p class="lead"></p>
   </div>
 
+  <div class="col-md-4">
+    <%= image_tag("writing.jpg", class:"img-responsive") %>
+    <p class="lead"></p>
+  </div>
+
+  <div class="col-md-4">
+    <%= image_tag("distress.jpg", class:"img-responsive") %>
+    <p class="lead"></p>
+  </div>
+</div>
 
 
 
-  <div class ="row">
-      <div class="col-md-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-          <h3 class="panel-title">Tasks</h3>
-          </div>
-          <div class="panel-body">
-          Grouped by projects and lists. Just the way you like'em
-          </div>
-        </div>
+
+<div class ="row">
+  <div class="col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+      <h3 class="panel-title">Tasks</h3>
       </div>
-
-
-      <div class="col-md-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-          <h3 class="panel-title">Permissions</h3>
-          </div>
-          <div class="panel-body">
-          Fine-grained permissions
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-          <h3 class="panel-title">Comments</h3>
-          </div>
-          <div class="panel-body">
-            <ul>
-              <li> Comment on tasks and documents</li>
-              <li> Get email notifications</li>
-            </ul>
-          </div>
-        </div>
+      <div class="panel-body">
+      Grouped by projects and lists. Just the way you like'em
       </div>
     </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+      <h3 class="panel-title">Permissions</h3>
+      </div>
+      <div class="panel-body">
+      Fine-grained permissions
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Comments</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <li> Comment on tasks and documents</li>
+          <li> Get email notifications</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <p><%= @quotes_array[0]["quote"]%></p>
-      <p class= text-muted ><em> -<%= @quotes_array[0]["contributor"]%></em></p>
+  <p><%= @quotes_array[0]["quote"]%></p>
+  <p class= text-muted ><em> -<%= @quotes_array[0]["contributor"]%></em></p>
 
-      <p><%= @quotes_array[1]["quote"]%></p>
-      <p class= text-muted><em> -<%= @quotes_array[1]["contributor"]%></em></p>
+  <p><%= @quotes_array[1]["quote"]%></p>
+  <p class= text-muted><em> -<%= @quotes_array[1]["contributor"]%></em></p>
 
-      <p><%= @quotes_array[2]["quote"]%></p>
-      <p class= text-muted><em> -<%= @quotes_array[2]["contributor"]%></em></p>
+  <p><%= @quotes_array[2]["quote"]%></p>
+  <p class= text-muted><em> -<%= @quotes_array[2]["contributor"]%></em></p>
