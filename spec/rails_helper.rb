@@ -55,13 +55,11 @@ def new_project
   @project1 = Project.create(name: 'Test Project')
 end
 
-def new_user
-  @user1 = User.create(first_name: 'first', last_name: 'last', email: 'email@mail.com',
-  password: 'securepass')
-end
+
 
 def sign_in
-  new_user
+  @user1 = User.create(first_name: 'first', last_name: 'last', email: 'email@mail.com',
+  password: 'securepass', password_confirmation: 'securepass')
   visit root_path
   click_on 'Sign In'
   expect(current_path).to eq sign_in_path

@@ -3,10 +3,10 @@ require 'rails_helper'
 describe User do
   before do
     @user = User.create(first_name: 'first', last_name: 'last', email: 'email@mail.com',
-    password: 'securepass')
+    password: 'securepass', password_confirmation: 'securepass')
   end
 
-  it 'is valid with a first name, last name, email, and password' do
+  it 'is valid with a first name, last name, email, password, and password_confirmation' do
     @user.valid?
     expect(@user).to be_valid
   end

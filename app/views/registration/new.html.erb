@@ -5,10 +5,9 @@
       <%= form_for @user, url: sign_up_path, html: {class: "form-horizontal"} do |f| %>
         <% if @user.errors.any? %>
           <% @user.errors.full_messages.each do |message| %>
-          <strong><p class="text-danger"><%= message %> </p></strong>
+            <strong><p class="text-danger"><%= message %> </p></strong>
+          <% end %>
         <% end %>
-        <% end %>
-    </div>
         <% labels_and_field_types = {
             first_name: :text_field,
             last_name: :text_field,
@@ -17,25 +16,20 @@
             password_confirmation: :password_field
           } %>
         <% labels_and_field_types.each do |label, field_type| %>
-          <div class="form-group">
             <div class="row">
               <div class="col-sm-6  ">
                 <%= f.label label, class: "control-label" %>
               </div>
             </div>
-            <div class="row">
+            <div class="form-group">
               <div class="col-sm-12">
                 <%= f.send(field_type, label, class: 'form-control') %>
               </div>
             </div>
-          </div>
         <% end %>
 
-        <div class = "form-group">
-          <div class="pull-left">
-            <%= f.submit  "Sign Up", class: "btn btn-default" %>
-          </div>
-        </div>
+        <%= f.submit  "Sign Up", id: "Sign", class: "btn btn-default" %>
       <% end %>
+    </div>
   </div>
 </div>
