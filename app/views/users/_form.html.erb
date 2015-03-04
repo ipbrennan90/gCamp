@@ -1,22 +1,20 @@
 <%= form_for @user, html: {class: "form-horizontal"} do |u| %>
   <%= render partial: "shared/errors", locals: {object: @user} %>
 
-<!-- Differences -->
-<!-- 1. argument to label and text_field -->
-<!-- 2. text_field VS email_field -->
-
   <% labels_and_field_types = {
       first_name: :text_field,
       last_name: :text_field,
-      email: :email_field
+      email: :email_field,
+      password: :password_field,
+      password_confirmation: :password_field
     } %>
 
   <% labels_and_field_types.each do |label, field_type| %>
     <div class="form-group">
-      <div class="col-sm-2">
+      <div class="col-sm-2 text-right">
         <%= u.label label, class: "control-label" %>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <%= u.send(field_type, label, class: 'form-control') %>
       </div>
     </div>

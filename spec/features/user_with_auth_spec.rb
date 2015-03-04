@@ -15,7 +15,7 @@ require 'rails_helper'
       fill_in :user_email, with: 'email1@email1.com'
       fill_in :user_password, with: 'securepass1'
       fill_in :user_password_confirmation, with: 'securepass1'
-      within("form") { click_on 'Sign up' }
+      within("form") { click_on 'Sign Up' }
       expect(current_path).to eq '/'
       expect(page).to have_content("You have successfully signed up")
       expect(page).to have_content('first1 last1')
@@ -38,7 +38,8 @@ require 'rails_helper'
       visit root_path
       sign_in
       click_on 'Sign out'
-      expect(page).to have_content('You have successfully logged out Sign in ')
+      expect(page).to have_content('You have successfully logged out')
+      expect(page).to have_content('Sign In')
       expect(page).to have_no_content('Sign out')
       expect(current_path).to eq '/'
     end
@@ -46,6 +47,7 @@ require 'rails_helper'
     scenario 'Users can sign in with valid credentials' do
       sign_in
       expect(page).to have_content("You have successfully signed in")
+      expect(page).to have_content("first last")
       expect(current_path).to eq '/'
     end
 

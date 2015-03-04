@@ -12,25 +12,31 @@
 
   <div class="container">
       <%=link_to("gCamp", root_path, class:"navbar-brand") %>
+
+
+    <ul class="nav navbar-nav navbar-right">
+      <% if current_user %>
+        <li><%= link_to "#{current_user.first_name} #{current_user.last_name}", user_path(current_user) %></li>
+        <li><%= link_to "Sign out", sign_out_path %></li>
+      <% else %>
+        <li><%= link_to "Sign In", sign_in_path %></li>
+        <li><%= link_to "Sign Up", sign_up_path %></li>
+      <% end %>
+    </ul>
+
   </div>
+
 
   </nav>
 
 
 <div class="container">
   <% if flash[:notice]%>
-    <div class = "alert alert-success text-center">
+    <div class = "alert alert-success">
       <%= flash[:notice] %>
     </div>
   <%end%>
-  <% if current_user %>
-    <p> Current user is: <%= "#{current_user.first_name} #{current_user.last_name}" %></p>
-    <%= link_to "Sign out", sign_out_path %>
-  <% else %>
-    <%= link_to "Sign in", sign_in_path %>
-    <%= link_to "Sign Up", sign_up_path %>
 
-  <% end %>
 
 
 
