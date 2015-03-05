@@ -3,6 +3,7 @@ require 'rails_helper'
 
   feature 'Tasks' do
     before do
+      sign_in
       @task1 = Task.create(description: 'Test Task', due_date: '2015-03-04')
     end
 

@@ -3,6 +3,8 @@ require 'rails_helper'
 
 describe Project do
 
+
+
   it 'is valid with a name' do
     new_project
     @project1.valid?
