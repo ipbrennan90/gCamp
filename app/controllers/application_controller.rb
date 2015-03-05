@@ -4,11 +4,20 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper :all
   helper_method :current_user
+  helper_method :auth
 
   def current_user
     if session[:user_id].present?
       @user = User.find(session[:user_id])
     end
   end
+
+  def auth
+    unless current_user
+      redirect_to sign_in_path
+      flash[:danger] = "You must sign in"
+    end
+  end
+
 
 end

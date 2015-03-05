@@ -1,8 +1,10 @@
 class AuthenticationController < ApplicationController
 
+
   def new
-    session[:user_id] = current_user
+    session[:user_id] = nil
   end
+
 
   def create
     user = User.find_by(email: params[:email])

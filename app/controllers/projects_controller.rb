@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :auth
   before_action :set_project, only: [:edit, :show, :update]
 
   def index
