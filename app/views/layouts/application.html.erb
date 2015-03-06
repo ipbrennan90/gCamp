@@ -50,6 +50,8 @@
 
 <%= yield %>
 
+  <hr></hr>
+
   <footer>
     <% unless current_user%>
       <%= link_to("About",about_path) %> | <%= link_to("Terms",terms_path) %> | <%= link_to("FAQ", faq_path) %>
@@ -58,7 +60,7 @@
       <%=link_to(image_tag("Github.png", class:"link_image"), "https://github.com/ipbrennan90")%>
       <%=link_to(image_tag("linked_in.jpg", class:"link_image"), "https://www.linkedin.com/pub/ian-brennan/46/256/81b")%>
     <% else %>
-      <%= link_to("Terms",terms_path) %> | <%= link_to("About",about_path) %> | <%= link_to("FAQ", faq_path) %> | <%= link_to "Tasks", tasks_path%>
+      <%= link_to("Terms",terms_path) %> | <%= link_to("About",about_path) %> | <%= link_to("FAQ", faq_path) %>
        | <%= link_to "Users", users_path%> | <%= link_to "Projects", projects_path %>
       <%=link_to(image_tag("galvanize.png", class:"link_image"), "https://students.gschool.it/students/282")%>
       <%=link_to(image_tag("Twitter.png", class:"link_image"), "https://twitter.com/brennanator90")%>

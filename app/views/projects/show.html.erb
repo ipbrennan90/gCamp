@@ -6,13 +6,15 @@
 
   <h1 class = "page-header">
     <%= @project.name %>
+
     <div class = "pull-right">
+
       <%= link_to "Edit", edit_project_path(@project), class: "btn btn-info" %>
       <%= link_to "Delete", project_path(@project), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
+
     </div>
   </h1>
-  <% comment do %>
   <ul class = "breadcrumb">
-    <li> <%= link_to "Projects", projects_path %> > <%= @project.name  %></li>
+    <li> <%= link_to "Projects", projects_path %> / <%= @project.name  %></li>
   </ul>
-  <% end %>
+  <%= link_to pluralize(@project.tasks.count, "task"), project_tasks_path(@project) %>

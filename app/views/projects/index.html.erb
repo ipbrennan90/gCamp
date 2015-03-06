@@ -16,10 +16,12 @@
 <table class = "table">
   <thead>
     <th>Name</th>
+    <th>Tasks</th>
   </thead>
   <% @projects.each do |r| %>
   <tr>
     <td> <%= link_to r.name, project_path(r) %>  </td>
+    <td> <%= link_to r.tasks.count, project_tasks_path(r) %></td>
   </tr>
   <% end %>
 </table>
