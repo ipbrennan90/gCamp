@@ -1,21 +1,22 @@
 class MembershipsController < ApplicationController
   before_action :find_and_set_project
-  before_actions :set_membership, only: [:show, :edit, :update, :destroy]
+  before_action :set_membership, only: [:show, :edit, :update, :destroy]
 
   def index
     @memberships = @project.memberships
     @name = @project.name
+    @membership = @project.memberships.new
   end
 
   def new
-    @membership = @project.membership.new
+    @membership = @project.memberships.new
   end
 
   def create
-    @membership = @project.membership.new(membership_params)
+    @membership = @project.memberships.new(membership_params)
     if @membership.save
-      flash[:notice] = ""
-      redirect to project_memberships_path(@project.id)
+      flash[:notice] = "User has been successfully added"
+      redirect_to project_memberships_path(@project.id)
     else
       render :new
     end
@@ -44,6 +45,7 @@ class MembershipsController < ApplicationController
 
   private
 
+
   def find_and_set_project
     @project= Project.find(params[:project_id])
   end
@@ -53,6 +55,6 @@ class MembershipsController < ApplicationController
   end
 
   def membership_params
-    params.require(:membership).permit(:user_id, :project_id)
+    params.require(:membership).permit(:user_id, :project_id, :role)
   end
 end
