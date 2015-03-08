@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :auth
-  before_action :set_project, only: [:edit, :show, :update]
+  before_action :find_and_set_project, only: [:edit, :show, :update]
 
   def index
     @projects=Project.all
@@ -44,10 +44,6 @@ class ProjectsController < ApplicationController
   end
 
   private
-
-  def set_project
-    @project=Project.find(params[:id])
-  end
 
   def project_params
     params.require(:project).permit(:name)

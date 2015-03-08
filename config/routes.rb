@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :tasks
   resources :users
   resources :projects do
+    resources :users
     resources :tasks
     resources :memberships
   end

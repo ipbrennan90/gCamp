@@ -54,8 +54,6 @@ class TasksController < ApplicationController
     params.require(:task).permit(:description, :completed, :due_date, :project_id)
   end
 
-  def find_and_set_project
-    @project = Project.find(params[:project_id])
-  end
+
 
 end

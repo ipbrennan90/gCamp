@@ -1,4 +1,5 @@
 class MembershipsController < ApplicationController
+  #before_action :find_and_set_user
   before_action :find_and_set_project
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
 
@@ -44,11 +45,6 @@ class MembershipsController < ApplicationController
   end
 
   private
-
-
-  def find_and_set_project
-    @project= Project.find(params[:project_id])
-  end
 
   def set_membership
     @membership = @project.memberships.find(params[:id])

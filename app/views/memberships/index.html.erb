@@ -1,1 +1,11 @@
 <%= render "form" %>
+
+  <% @project.memberships.each do |m| %>
+    <% if m.user.present? %>
+      <%= form_for [@project, m], html: {class: 'form-inline'} do |f| %>
+        <%= link_to m.user.full_name, user_path(m.user) %>
+        <%= f.select(:role, [['Owner',1], ['Member', 2]], {}, {class: 'form-control'}) %>
+        <%= f.submit %>
+      <% end %>
+    <% end %>
+  <% end %>
