@@ -3,9 +3,14 @@
   <% @project.memberships.each do |m| %>
     <% if m.user.present? %>
       <%= form_for [@project, m], html: {class: 'form-inline'} do |f| %>
-        <%= link_to m.user.full_name, user_path(m.user) %>
-        <%= f.select(:role, [['Owner',1], ['Member', 2]], {}, {class: 'form-control'}) %>
-        <%= f.submit %>
+      <table>
+        <td><%= link_to m.user.full_name, user_path(m.user) %></td>
+        <td><%= f.select(:role, [['Owner',1], ['Member', 2]], {}, {class: 'form-control'}) %></td>
+        <td><%= f.submit %></td>
+        <td> <%= link_to user_path(m.user), class: "glyphicon glyphicon-remove" %></td>
+      </table >
+
+
       <% end %>
     <% end %>
   <% end %>
