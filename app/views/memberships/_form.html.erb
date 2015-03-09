@@ -1,8 +1,9 @@
 
 
-<%= form_for [@project, @membership], html: {class: 'form-horizontal'} do |f| %>
+
+<%= form_for [@project, @membership], html: {class: 'form-inline'} do |f| %>
 
 <%= f.collection_select(:user_id, User.all, :id, :full_name, {include_blank: 'Please select user'}, {class: 'form-control'}) %>
 <%= f.select(:role, [['Owner',1], ['Member', 2]], {}, {class: 'form-control'}) %>
-<%= f.submit %>
+<%= f.submit class: 'btn btn-info' %>
 <% end %>
