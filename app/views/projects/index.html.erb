@@ -22,7 +22,9 @@
   <tr>
     <td> <%= link_to r.name, project_path(r) %>  </td>
     <td> <%= link_to r.tasks.count, project_tasks_path(r) %></td>
+    <% comment do %>
     <td> <%= link_to r.memberships.count, project_memberships_path(r) %></td>
+    <% end %>
   </tr>
   <% end %>
 </table>
