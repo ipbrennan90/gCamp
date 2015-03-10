@@ -39,7 +39,7 @@
         <th></th>
       </thead>
 
-          <% @project.memberships.each do |m| %>
+          <% @memberships.each do |m| %>
             <% if m.user.present? && m.id.present? %>
               <%= form_for [@project, m], html: {class: 'form-inline'} do |f| %>
               <tr>

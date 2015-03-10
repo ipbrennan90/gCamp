@@ -23,18 +23,12 @@ class MembershipsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def show
-  end
-
   def update
     if @membership.update(membership_params)
       flash[:notice] = ""
       redirect_to project_memberships_path(@project.id)
     else
-      render :edit
+      render :index
     end
   end
 
