@@ -16,7 +16,7 @@ class TasksController < ApplicationController
    @task = @project.tasks.new(task_params)
    if @task.save
      flash[:notice]= 'Task has been created'
-     redirect_to project_tasks_path(@project.id)
+     redirect_to tasks_path(@task)
    else
      render :new
    end
@@ -26,6 +26,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
   end
 
   def update

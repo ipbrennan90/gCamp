@@ -3,7 +3,9 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   has_many :memberships
   has_many :projects, through: :memberships
+  has_many :tasks, through: :comments
   has_secure_password
+
 
   def full_name
     "#{first_name} #{last_name}"
