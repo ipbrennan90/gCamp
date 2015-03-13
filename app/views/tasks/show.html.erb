@@ -29,15 +29,30 @@
   <h1> Comments </h1>
 
   <% @task.comments.each do |c| %>
-  <% if c.user %>
-
-  <%= link_to c.user.full_name, user_path(c.user) %>
+    <% if c.user %>
+      <div class="row">
+        <div class="col-sm-3 pull-left">
+          <%= link_to c.user.full_name, user_path(c.user) %>
+          <div class="text-muted">
+            <%= time_ago_in_words(c.created_at) + " ago" %>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <%= c.content %>
+        </div>
+      </div>
+      <p class="lead"></p>
+    <% end %>
   <% end %>
-  <% end %>
 
-  <%= form_for [@task, @comment] do |f| %>
+  <%= form_for [@project, @task, @comment] do |f| %>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-md-9">
+        <div class="form-group">
+          <%= f.text_area :content, class: "form-control"%>
+        </div>
+        <%= f.submit "Add Comment", class: "btn btn-info" %>
+      </div>
+    </div>
 
-  <%= f.label :content %>
-  <%= f.text_area :content %>
-  <%= f.submit %>
   <% end %>

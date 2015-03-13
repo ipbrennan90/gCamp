@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :find_and_set_task
+  before_action :find_and_set_project
   def index
 
     @comments= @task.comments.all
@@ -10,7 +11,7 @@ class CommentsController < ApplicationController
     @comment = @task.comments.new(comment_params)
     if @comment.save
       flash[:notice] = "comment noted"
-      redirect_to tasks_path(@task)
+      redirect_to project_task_path(@project, @task)
     else
       render "task/show"
     end
@@ -23,7 +24,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:content, :task_id, :user_id)
+    params.require(:comment).permit(:content).merge(user_id: current_user.id)
   end
 
   def find_and_set_task
