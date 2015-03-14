@@ -21,3 +21,15 @@
   <div>
   <%= link_to pluralize(@project.memberships.count, "memberhship"), project_memberships_path(@project) %>
   </div>
+
+  <div class="well">
+    <h3>Delete Project</h3>
+    <div>
+    <%= "Deleting this project will also delete #{pluralize(@project.memberships.count, "memberhship")}, #{pluralize(@project.tasks.count, "task")} and associated comments." %>
+    </div>
+    <p class="lead"></p>
+    <div>
+    <%= link_to "Delete", project_path(@project), method: :delete, data: {confirm: "Are you sure ?"}, class: "btn btn-danger" %>
+    </div>
+
+  </div>
