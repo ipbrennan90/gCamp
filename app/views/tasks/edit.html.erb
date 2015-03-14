@@ -2,7 +2,7 @@
 
   <h1>Edit Task</h1>
   <ol class = "breadcrumb">
-    <li> <%= link_to "Tasks", tasks_path %> > <%= link_to @task.description , task_path(@task) %> > Editing Task </li>
+    <li> <%= link_to "Projects", projects_path %> / <%= link_to @project.name, project_path(@project) %> / <%= link_to "Tasks", project_tasks_path(@project) %> / <%= link_to @task.description, project_tasks_path(@project) %> / Edit </li>
   </ol>
 
   <%= render "form" %>

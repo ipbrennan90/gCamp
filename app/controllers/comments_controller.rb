@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   before_action :find_and_set_task
-  before_action :find_and_set_project
   def index
 
     @comments= @task.comments.all
@@ -11,9 +10,9 @@ class CommentsController < ApplicationController
     @comment = @task.comments.new(comment_params)
     if @comment.save
       flash[:notice] = "comment noted"
-      redirect_to project_task_path(@project, @task)
+      redirect_to project_task_path(@task.project.id, @task)
     else
-      render "task/show"
+      redirect_to project_task_path(@task.project.id, @task)
     end
   end
 

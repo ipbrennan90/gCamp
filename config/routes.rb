@@ -18,12 +18,14 @@ Rails.application.routes.draw do
 
 
 
+  resources :tasks, only: [:show] do
+    resources :comments, only: [:create, :index]
+  end
+
 
 
   resources :projects do
-    resources :tasks do
-      resources :comments
-    end
+    resources :tasks
     resources :memberships
   end
 

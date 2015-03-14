@@ -29,7 +29,7 @@
           <% else %>
             <%=link_to t.description, project_task_path(@project, t) %>
 
-            <%= link_to t.comments.count, project_task_comments_path(@project,t), class: "badge" %>
+            <%= link_to t.comments.count, task_comments_path(t), class: "badge" %>
           <% end %>
         </td>
         <td>
