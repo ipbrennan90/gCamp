@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="907741222">
+    <data-source source="LOCAL" name="Rails gCamp: development" uuid="e470634f-cfae-4d4d-ba38-d00b5fe1f084">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:gcamp_development</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails gCamp: test" uuid="edcf077a-daeb-4439-aa99-4795f41f268f">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:gcamp_test</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails gCamp: production" uuid="ee3f9c81-057d-43a6-ba3c-2b427f8f677c">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:gcamp_production</jdbc-url>
+      <user-name>gcamp</user-name>
+      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddfeddfe9dfebdfe7dffadff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
