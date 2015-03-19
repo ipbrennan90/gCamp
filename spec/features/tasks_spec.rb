@@ -38,7 +38,7 @@ require 'rails_helper'
 
     scenario 'User can delete task' do
       visit project_tasks_path(@project1)
-      click_on "Delete"
+      page.find(:css, 'a[class="glyphicon glyphicon-remove"]').click
       expect(page).to have_no_content('Test Task')
     end
 

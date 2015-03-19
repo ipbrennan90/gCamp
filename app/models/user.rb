@@ -1,4 +1,4 @@
-iclass User < ActiveRecord::Base
+class User < ActiveRecord::Base
   validates :first_name, :last_name, :email, :password, :password_confirmation, presence: true
   validates :email, uniqueness: true
   has_many :memberships, dependent: :destroy
