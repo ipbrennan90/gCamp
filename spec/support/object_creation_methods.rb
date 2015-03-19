@@ -6,13 +6,13 @@ def create_user
 
 end
 
-def creaete_users
+def create_users
   User.destroy_all
   @user_admin = User.create(first_name:"Adam", last_name: 'Admin', email: 'adam.admin@daboss.com', password: 'adminpass', password_confirmation: 'adminpass', permission: 1)
   20.times do
-    pass=Faker::Internet.password
+    @pass=Faker::Internet.password
     User.create!(first_name:Faker::Name.first_name last_name: Faker::Name.last_name, email: Faker::Internet.email,
-    password: pass, password_confirmation: pass, permission: 0)
+    password: @pass, password_confirmation: @pass, permission: 0)
   end
 end
 
