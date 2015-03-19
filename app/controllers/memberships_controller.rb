@@ -33,10 +33,15 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-    membership = Membership.find(params[:id])
-    membership.destroy
-    flash[:notice] = "#{membership.user.full_name} was successfully removed"
-    redirect_to project_memberships_path(@project.id)
+    if owner_count(@project) == 1
+      flash[:danger] = "Projects much have at least one owner"
+      redirect_to project_memberships_path(@project.id)
+    else
+      membership = Membership.find(params[:id])
+      membership.destroy
+      flash[:notice] = "#{membership.user.full_name} was successfully removed"
+      redirect_to project_memberships_path(@project.id)
+    end
   end
 
   private
@@ -48,4 +53,9 @@ class MembershipsController < ApplicationController
   def membership_params
     params.require(:membership).permit(:user_id, :project_id, :role)
   end
+
+  def owner_count(project)
+    project.memberships.where(role:1).count
+  end
+
 end
