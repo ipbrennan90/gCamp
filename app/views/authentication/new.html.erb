@@ -5,7 +5,7 @@
       <% if flash[:failure] %>
         <strong><p class="text-danger"><%= flash[:failure] %></p></strong>
       <% end %>
-      <%= form_tag sign_in_path, html: {class: "form-horizontal"} %>
+      <%= form_tag sign_in_path, html: {class: "form-horizontal"} %>tt
 
         <% labels_and_field_types = {
             email: :email_field_tag,
