@@ -3,8 +3,7 @@ require 'rails_helper'
   feature 'Invalid Users' do
 
     scenario 'Users cannot sign in with invalid credentials' do
-      user1 = User.create(first_name: 'first', last_name: 'last', email: 'email@mail.com',
-      password: 'securepass', password_confirmation: 'securepass')
+      create_user
       visit sign_in_path
       fill_in :email, with: 'email@mail.com'
       fill_in :password, with: "differentpassword"
