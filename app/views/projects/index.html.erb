@@ -18,14 +18,9 @@
     <th>Name</th>
     <th>Tasks</th>
   </thead>
-  <% user_projects = [] %>
-  <% @projects.each do |r| %>
-    <% r.users.cycle(1) {|x| if x.id == current_user.id
-      user_projects<< r
-    end} %>
-  <% end %>
 
-  <%user_projects.each do |user_project| %>
+
+  <%@user_projects.each do |user_project| %>
   <tr>
     <td> <%= link_to "#{user_project.name}", project_path(user_project) %> </td>
     <td> <%= user_project.tasks.count %> </td>

@@ -4,6 +4,12 @@ class ProjectsController < InternalController
 
   def index
     @projects=Project.all
+    @user_projects = []
+    @projects.each do |r|
+      r.users.cycle(1) {|x| if x.id == current_user.id
+        @user_projects<< r
+      end}
+    end
   end
 
   def new
