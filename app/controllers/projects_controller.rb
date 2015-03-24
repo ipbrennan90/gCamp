@@ -1,9 +1,11 @@
 class ProjectsController < InternalController
   before_action :auth
-  before_action :find_and_set_project, only: [:edit, :show, :update]
+  before_action :set_project, only: [:edit, :show, :update]
+  before_action :project_auth, only: [:show, :edit, :update, :destroy]
 
   def index
-    @projects=Project.all
+
+    @projects= Project.all
     @user_projects = []
     @projects.each do |r|
       r.users.cycle(1) {|x| if x.id == current_user.id
@@ -57,8 +59,18 @@ class ProjectsController < InternalController
     params.require(:project).permit(:name)
   end
 
-  def find_and_set_project
+  def set_project
     @project = Project.find(params[:id])
+  end
+
+  def project_auth
+    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
+
+      flash[:notice] = "You do not have access to that project"
+      redirect_to projects_path
+    end
+
+
   end
 
 end

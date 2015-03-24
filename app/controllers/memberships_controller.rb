@@ -33,7 +33,7 @@ class MembershipsController < InternalController
   end
 
   def destroy
-    if owner_count(@project) == 1
+    if owner_count(@project) == 1 && @membership.role == 1
       flash[:danger] = "Projects much have at least one owner"
       redirect_to project_memberships_path(@project.id)
     else

@@ -8,8 +8,9 @@
     <%= @project.name %>
 
     <div class = "pull-right">
-
-      <%= link_to "Edit", edit_project_path(@project), class: "btn btn-info" %>
+      <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id))%>
+        <%= link_to "Edit", edit_project_path(@project), class: "btn btn-info" %>
+      <% end %>
     </div>
   </h1>
   <ul class = "breadcrumb">
@@ -17,9 +18,9 @@
   </ul>
   <%= link_to pluralize(@project.tasks.count, "task"), project_tasks_path(@project) %>
   <div>
-  <%= link_to pluralize(@project.memberships.count, "memberhship"), project_memberships_path(@project) %>
+  <%= link_to pluralize(@project.memberships.count, "membership"), project_memberships_path(@project) %>
   </div>
-
+  <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id))%>
   <div class="well">
     <h3>Delete Project</h3>
     <div>
@@ -31,3 +32,4 @@
     </div>
 
   </div>
+  <% end %>

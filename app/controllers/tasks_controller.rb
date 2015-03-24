@@ -1,7 +1,9 @@
 class TasksController < InternalController
   before_action :find_and_set_project
   before_action :auth
+  before_action :project_auth, only: [:index,:show, :edit, :update, :destroy]
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+
   def index
     @tasks= @project.tasks
     @name= @project.name
@@ -54,6 +56,15 @@ class TasksController < InternalController
   def task_params
     params.require(:task).permit(:description, :completed, :due_date)
   end
+
+  def project_auth
+    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
+
+      flash[:notice] = "You do not have access to that project"
+      redirect_to projects_path
+    end
+  end
+
 
 
 

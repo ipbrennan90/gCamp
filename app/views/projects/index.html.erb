@@ -23,7 +23,7 @@
   <%@user_projects.each do |user_project| %>
   <tr>
     <td> <%= link_to "#{user_project.name}", project_path(user_project) %> </td>
-    <td> <%= user_project.tasks.count %> </td>
+    <td> <%= link_to "#{user_project.tasks.count}", project_tasks_path(user_project)  %> </td>
   </tr>
   <% end %>
 
