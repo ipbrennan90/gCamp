@@ -66,7 +66,7 @@ class ProjectsController < InternalController
   def project_auth
     unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
 
-      flash[:notice] = "You do not have access to that project"
+      flash[:danger] = "You do not have access"
       redirect_to projects_path
     end
 

@@ -21,15 +21,14 @@
   <%= link_to pluralize(@project.memberships.count, "membership"), project_memberships_path(@project) %>
   </div>
   <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id))%>
-  <div class="well">
-    <h3>Delete Project</h3>
-    <div>
-    <%= "Deleting this project will also delete #{pluralize(@project.memberships.count, "memberhship")}, #{pluralize(@project.tasks.count, "task")} and associated comments." %>
+    <div class="well">
+      <h3>Delete Project</h3>
+      <div>
+      <%= "Deleting this project will also delete #{pluralize(@project.memberships.count, "memberhship")}, #{pluralize(@project.tasks.count, "task")} and associated comments." %>
+      </div>
+      <p class="lead"></p>
+      <div>
+      <%= link_to "Delete", project_path(@project), method: :delete, data: {confirm: "Are you sure ?"}, class: "btn btn-danger" %>
+      </div>
     </div>
-    <p class="lead"></p>
-    <div>
-    <%= link_to "Delete", project_path(@project), method: :delete, data: {confirm: "Are you sure ?"}, class: "btn btn-danger" %>
-    </div>
-
-  </div>
   <% end %>

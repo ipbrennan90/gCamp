@@ -26,11 +26,15 @@
       </div>
     </div>
   <% end %>
-  <div class="col-md-8">
 
+  <div class="col-md-8">
+  <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id))%>
     <div class="well">
-    <%= render "form" %>
+
+      <%= render "form" %>
+
     </div>
+  <% end %>
     <table class="table">
       <thead>
         <th></th>
@@ -38,23 +42,34 @@
         <th></th>
         <th></th>
       </thead>
-
           <% @memberships.each do |m| %>
             <% if m.user.present? && m.id.present? %>
-              <%= form_for [@project, m], html: {class: 'form-inline'} do |f| %>
-              <tr>
-                  <td><%= link_to m.user.full_name, user_path(m.user), class: "pull-left" %>
+              <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id))%>
+
+                <%= form_for [@project, m], html: {class: 'form-inline'} do |f| %>
+                  <tr>
+                      <td><%= link_to m.user.full_name, user_path(m.user), class: "pull-left" %>
 
 
-                  <td><%= f.select(:role, [['Owner',1], ['Member', 2]], {}, {class: 'form-control'}) %></td>
+                      <td><%= f.select(:role, [['Owner',1], ['Member', 2]], {}, {class: 'form-control'}) %></td>
 
-                <td><%= f.submit 'Update', class: "btn btn-info"  %></td>
-                <td><%= link_to '', project_membership_path(@project,m), method: :delete, class: "glyphicon glyphicon-remove"%></td>
-              </tr>
+                    <td><%= f.submit 'Update', class: "btn btn-info"  %></td>
+                    <td><%= link_to '', project_membership_path(@project,m), method: :delete, class: "glyphicon glyphicon-remove"%></td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td> <%= link_to m.user.full_name, user_path(m.user), class: "pull-left" %></td>
+                  <td> <%= m.user.role_description  %> </td>
+                  <% if m.user_id == current_user.id && m.role==2 %>
+                    <td><%= link_to '', project_membership_path(@project,m), method: :delete, class: "glyphicon glyphicon-remove"%></td>
+                  <% end %>
+                </tr>
               <% end %>
-
             <% end %>
-        <% end %>
+          <% end %>
+
+
 
     </table>
   </div>
