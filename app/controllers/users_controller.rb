@@ -21,6 +21,11 @@ class UsersController < InternalController
   end
 
   def edit
+    unless current_user.id == @user.id
+
+      :not_found
+    end
+
   end
 
   def show
@@ -36,9 +41,11 @@ class UsersController < InternalController
   end
 
   def destroy
-    flash[:notice]="User was successfully deleted"
+
     @user.destroy
+    session[:user_id] = nil
     redirect_to users_path
+
 
   end
 
@@ -47,7 +54,7 @@ class UsersController < InternalController
   def set_user
     @user = User.find(params[:id])
   end
-  
+
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :permission)
   end

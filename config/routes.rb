@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'sign-in', to: 'authentication#new'
   post 'sign-in', to: 'authentication#create'
   get 'sign-out', to: 'authentication#destroy'
+  match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
 
   resources :users
 

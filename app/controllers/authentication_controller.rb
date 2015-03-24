@@ -1,4 +1,4 @@
-class AuthenticationController < InternalController
+class AuthenticationController < ApplicationController
 
 
   def new

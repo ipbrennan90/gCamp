@@ -1,5 +1,5 @@
 <h1 class = "page-header">
-  Users
+<%=  "Users" %>
   <div class = "pull-right">
     <%= link_to "New User", new_user_path, class: "btn btn-info" %>
   </div>
@@ -23,14 +23,19 @@
         <%=link_to u.first_name+" "+u.last_name, user_path(u) %>
       </td>
       <td>
-        <%= mail_to u.email %>
+        <% if u.id == current_user.id %>
+          <%= mail_to u.email %>
+        <% end %>
       </td>
 
       <td>
         <div class = "pull-right">
-          <%= link_to 'Edit', edit_user_path(u) %>
+          <% if u.id == current_user.id %>
+            <%= link_to 'Edit', edit_user_path(u) %>
+          <% end %>
         </div>
       </td>
+
 
   </tr>
 
