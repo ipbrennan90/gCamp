@@ -14,14 +14,12 @@
     <div class = "form-group">
       <div class ="col-sm-6">
         <div class = "alert alert-danger">
-
             <h3><%= pluralize(@membership.errors.count, "error")%>  prohibited this from being saved : </h3>
               <ul>
                 <% @membership.errors.full_messages.each do |message| %>
                   <li><%= message %></li>
                 <% end %>
               </ul>
-
         </div>
       </div>
     </div>
@@ -30,9 +28,7 @@
   <div class="col-md-8">
   <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id))%>
     <div class="well">
-
       <%= render "form" %>
-
     </div>
   <% end %>
     <table class="table">
@@ -54,7 +50,11 @@
                       <td><%= f.select(:role, [['Owner',1], ['Member', 2]], {}, {class: 'form-control'}) %></td>
 
                     <td><%= f.submit 'Update', class: "btn btn-info"  %></td>
-                    <td><%= link_to '', project_membership_path(@project,m), method: :delete, class: "glyphicon glyphicon-remove"%></td>
+                    <% if m.role==1 && owner_count(@project)==1 %>
+                      <td><%=  "You are the last owner"%></td>
+                    <% else %>
+                      <td><%= link_to '', project_membership_path(@project,m), method: :delete, class: "glyphicon glyphicon-remove"%> </td>
+                    <% end  %>
                   </tr>
                 <% end %>
               <% else %>

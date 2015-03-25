@@ -26,8 +26,10 @@ class MembershipsController < InternalController
   end
 
   def update
-    if @membership.update(membership_params)
-      flash[:notice] = ""
+    if owner_count(@project) == 1 && @membership.role == 1
+      flash[:danger] = "Projects must have at least one owner"
+      redirect_to project_memberships_path(@project.id)
+    elsif @membership.update(membership_params)
       redirect_to project_memberships_path(@project.id)
     else
       render :index
@@ -36,7 +38,7 @@ class MembershipsController < InternalController
 
   def destroy
     if owner_count(@project) == 1 && @membership.role == 1
-      flash[:danger] = "Projects much have at least one owner"
+      flash[:danger] = "Projects must have at least one owner"
       redirect_to project_memberships_path(@project.id)
     else
       membership = Membership.find(params[:id])
@@ -45,6 +47,8 @@ class MembershipsController < InternalController
       redirect_to project_memberships_path(@project.id)
     end
   end
+
+
 
   private
 
@@ -56,9 +60,7 @@ class MembershipsController < InternalController
     params.require(:membership).permit(:user_id, :project_id, :role)
   end
 
-  def owner_count(project)
-    project.memberships.where(role:1).count
-  end
+
 
 
     def project_auth

@@ -1,6 +1,6 @@
 class InternalController < ActionController::Base
   helper :all
-  helper_method :current_user, :auth, :find_and_set_project, :find_and_set_user
+  helper_method :current_user, :auth, :find_and_set_project, :find_and_set_user, :match, :owner_count
 
   def current_user
     if session[:user_id].present?
@@ -21,6 +21,15 @@ class InternalController < ActionController::Base
 
   def find_and_set_user
     @user = User.find(params[:user_id])
+  end
+
+  def match(user)
+    match = user.memberships.pluck(:project_id) & current_user.memberships.pluck(:project_id)
+    match.empty?
+  end
+
+  def owner_count(project)
+    project.memberships.where(role:1).count
   end
 
 end

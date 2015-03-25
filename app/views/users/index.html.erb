@@ -23,14 +23,14 @@
         <%=link_to u.first_name+" "+u.last_name, user_path(u) %>
       </td>
       <td>
-        <% if u.id == current_user.id %>
+        <% unless match(u)%>
           <%= mail_to u.email %>
         <% end %>
       </td>
 
       <td>
         <div class = "pull-right">
-          <% if u.id == current_user.id %>
+          <%  u.id == current_user.id %>
             <%= link_to 'Edit', edit_user_path(u) %>
           <% end %>
         </div>
@@ -40,5 +40,5 @@
   </tr>
 
 
-  <% end %>
+
 </table>

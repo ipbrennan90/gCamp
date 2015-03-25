@@ -21,10 +21,10 @@ class UsersController < InternalController
   end
 
   def edit
-    unless current_user.id == @user.id
-
-      :not_found
+    if @user.id != current_user.id
+      not_found
     end
+
 
   end
 
@@ -58,4 +58,14 @@ class UsersController < InternalController
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :permission)
   end
+
+  def match(user)
+    match = user.memberships.pluck(:project_id) & current_user.memberships.pluck(:project_id)
+    match.empty?
+  end
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
 end
