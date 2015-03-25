@@ -44,7 +44,7 @@ class MembershipsController < InternalController
       membership = Membership.find(params[:id])
       membership.destroy
       flash[:notice] = "#{membership.user.full_name} was successfully removed"
-      redirect_to project_memberships_path(@project.id)
+      redirect_to projects_path
     end
   end
 
@@ -63,15 +63,12 @@ class MembershipsController < InternalController
 
 
 
-    def project_auth
-      unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
-
-        flash[:danger] = "You do not have access"
-        redirect_to projects_path
-      end
-
-
+  def project_auth
+    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
+      flash[:danger] = "You do not have access"
+      redirect_to projects_path
     end
+  end
 
 
 

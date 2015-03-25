@@ -21,11 +21,7 @@ class UsersController < InternalController
   end
 
   def edit
-    if @user.id != current_user.id
-      not_found
-    end
-
-
+    render 
   end
 
   def show
@@ -64,8 +60,5 @@ class UsersController < InternalController
     match.empty?
   end
 
-  def not_found
-    raise ActionController::RoutingError.new('Not Found')
-  end
 
 end
