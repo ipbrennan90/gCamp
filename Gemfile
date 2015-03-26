@@ -9,7 +9,7 @@ group :development, :test do
   gem 'spring'
   gem 'pry'
 end
-gem 'rails_12factor', '~> 0.0.3', group: :productio
+gem 'rails_12factor', '~> 0.0.3', group: :production
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'rails', '4.2.0'
 gem 'pg'
