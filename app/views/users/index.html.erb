@@ -23,14 +23,14 @@
         <%=link_to u.first_name+" "+u.last_name, user_path(u) %>
       </td>
       <td>
-        <% unless match(u)%>
+        <% unless match(u) && current_user.permission == false%>
           <%= mail_to u.email %>
         <% end %>
       </td>
 
       <td>
         <div class = "pull-right">
-          <%  if u.id == current_user.id %>
+          <%  if u.id == current_user.id || current_user.permission == true %>
             <%= link_to 'Edit', edit_user_path(u) %>
           <% end %>
         </div>

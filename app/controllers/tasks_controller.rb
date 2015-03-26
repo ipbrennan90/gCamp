@@ -58,7 +58,7 @@ class TasksController < InternalController
   end
 
   def project_auth
-    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
+    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true
 
       flash[:notice] = "You do not have access to that project"
       redirect_to projects_path

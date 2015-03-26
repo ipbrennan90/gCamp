@@ -8,7 +8,7 @@
     <%= @project.name %>
 
     <div class = "pull-right">
-      <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id))%>
+      <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true%>
         <%= link_to "Edit", edit_project_path(@project), class: "btn btn-info" %>
       <% end %>
     </div>
@@ -20,7 +20,7 @@
   <div>
   <%= link_to pluralize(@project.memberships.count, "membership"), project_memberships_path(@project) %>
   </div>
-  <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id))%>
+  <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true%>
     <div class="well">
       <h3>Delete Project</h3>
       <div>

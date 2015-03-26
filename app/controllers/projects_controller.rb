@@ -65,7 +65,7 @@ class ProjectsController < InternalController
   end
 
   def project_owner_auth
-    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1))
+    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1) || current_user.permission == true)
 
       flash[:danger] = "You do not have access"
       redirect_to projects_path
@@ -73,7 +73,7 @@ class ProjectsController < InternalController
   end
 
   def project_auth
-    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
+    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true
 
       flash[:danger] = "You do not have access"
       redirect_to projects_path

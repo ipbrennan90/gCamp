@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   helper :all
-  helper_method :current_user, :auth, :project_auth
+  helper_method :current_user, :auth, :project_auth, :project_owner_auth
 
 
   def current_user
@@ -19,14 +19,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def project_auth
-    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
+  def project_owner_auth
+    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1) || current_user.permission == true)
 
       flash[:danger] = "You do not have access"
       redirect_to projects_path
     end
+  end
 
+  def project_auth
+    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true
 
+      flash[:danger] = "You do not have access"
+      redirect_to projects_path
+    end
   end
 
 
