@@ -20,6 +20,15 @@
     </div>
   <% end %>
 
+  <% if @user.permission==true %>
+    <div class = "form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= u.check_box :permission %>
+        <%= u.label :permission, "Admin" %>
+      </div>
+    </div>
+  <% end %>
+
   <div class = "form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <%= u.submit class: "btn btn-primary" %>
@@ -27,6 +36,7 @@
 
     </div>
   </div>
+
 <% end %>
 
 <% if params[:action] == "edit" %>
