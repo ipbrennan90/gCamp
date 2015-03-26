@@ -63,6 +63,8 @@
                   <td> <%= m.membership_description(m)%> </td>
                   <% if m.user_id == current_user.id && m.role==2 || current_user.permission == true %>
                     <td><%= link_to '', project_membership_path(@project,m), method: :delete, class: "glyphicon glyphicon-remove"%></td>
+                  <% else %>
+                    <td></td>
                   <% end %>
                 </tr>
               <% end %>
