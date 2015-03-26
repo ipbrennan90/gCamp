@@ -12,13 +12,12 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def role_description
-    if :role == 1
-      "owner"
-    else
-      "member"
-    end
+  before_save :default_values
+  def default_values
+    self.permission ||= 'false'
   end
+
+
 
 
 end

@@ -16,6 +16,7 @@ class MembershipsController < InternalController
   end
 
   def create
+    @memberships = @project.memberships
     @membership = @project.memberships.new(membership_params)
     if @membership.save
       flash[:notice] = "User has been successfully added"
@@ -65,7 +66,7 @@ class MembershipsController < InternalController
 
   def project_auth
     unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
-      flash[:danger] = "You do not have access"
+      flash[:danger] = "You do not have access to that project"
       redirect_to projects_path
     end
   end

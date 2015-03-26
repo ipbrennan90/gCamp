@@ -11,8 +11,8 @@
   <dd> <%= @user.first_name %> </dd>
   <dt>Last Name</dt>
   <dd> <%= @user.last_name %> </dd>
-  <dt>Email</dt>
-  <% if @user.id == current_user.id %>
+  <% if @user.id == current_user.id || !match(@user)   %>
+    <dt>Email</dt>
     <dd> <%= @user.email %> </dd>
   <% end %>
 

@@ -4,4 +4,14 @@ class Membership < ActiveRecord::Base
   validates :user, presence: true
   validates :user, uniqueness: { scope: :project_id, message: "has already been added to this project"}
 
+
+  def membership_description(membership)
+    if membership.role==1
+      "Owner"
+    else
+      "Member"
+    end
+  end
+
+
 end

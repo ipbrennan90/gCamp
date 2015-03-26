@@ -30,11 +30,12 @@
 
       <td>
         <div class = "pull-right">
-          <%  u.id == current_user.id %>
+          <%  if u.id == current_user.id %>
             <%= link_to 'Edit', edit_user_path(u) %>
           <% end %>
         </div>
       </td>
+    <% end %>
 
 
   </tr>

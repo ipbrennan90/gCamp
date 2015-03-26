@@ -21,7 +21,7 @@ class UsersController < InternalController
   end
 
   def edit
-    render 
+    
   end
 
   def show
@@ -52,7 +52,7 @@ class UsersController < InternalController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :permission)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation,:permission)
   end
 
   def match(user)
