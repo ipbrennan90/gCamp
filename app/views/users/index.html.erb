@@ -23,7 +23,7 @@
         <%=link_to u.first_name+" "+u.last_name, user_path(u) %>
       </td>
       <td>
-        <% unless match(u) && current_user.permission == false%>
+        <% if !match(u) || current_user.permission == true%>
           <%= mail_to u.email %>
         <% end %>
       </td>

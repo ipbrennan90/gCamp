@@ -11,7 +11,8 @@ class AuthenticationController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:notice] ="You have successfully signed in"
-      redirect_to projects_path
+      redirect_to after_sign_in_path_for(user)
+
     else
       flash[:failure] = "Email / Password combination is invalid"
       render :new

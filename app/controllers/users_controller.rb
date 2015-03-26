@@ -21,7 +21,9 @@ class UsersController < InternalController
   end
 
   def edit
-    
+    unless current_user.id == @user.id
+      render_404
+    end
   end
 
   def show
@@ -58,6 +60,10 @@ class UsersController < InternalController
   def match(user)
     match = user.memberships.pluck(:project_id) & current_user.memberships.pluck(:project_id)
     match.empty?
+  end
+
+  def render_404
+    render file: "#{Rails.root}/public/404.html", layout: false, status: 404
   end
 
 
