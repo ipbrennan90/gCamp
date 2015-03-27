@@ -11,7 +11,11 @@
 
 
   <div class="container">
+    <% if current_user %>
+      <%=link_to("gCamp", projects_path, class:"navbar-brand") %>
+    <% else %>
       <%=link_to("gCamp", root_path, class:"navbar-brand") %>
+    <% end %>
 
 
 
