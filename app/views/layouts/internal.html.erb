@@ -6,9 +6,11 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+<% if current_user%>
  <% if current_user.permission==true%>
   <%current_user.projects=Project.all%>
  <% end %>
+<% end %>
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
 
