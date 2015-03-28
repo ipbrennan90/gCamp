@@ -1,6 +1,7 @@
 class UsersController < InternalController
   before_action :auth
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  helper_method :hide_token
   def index
     @users=User.all
   end
@@ -39,22 +40,31 @@ class UsersController < InternalController
   end
 
   def destroy
-
     user = User.find(params[:id])
+    if user == current_user
+      session[:user_id]=nil
+    end
     user.destroy
     redirect_to users_path
-
-
   end
 
   private
+
+  def hide_token(token)
+    if token != nil
+
+      asterisk = "*"*(token.length-3)
+      hidden_token="#{token[0..3]}#{asterisk}"
+      hidden_token
+    end
+  end
 
   def set_user
     @user = User.find(params[:id])
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation,:permission)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation,:permission, :pivotal_tracker_token)
   end
 
   def match(user)
