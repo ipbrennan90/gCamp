@@ -15,7 +15,7 @@
     <dt>Email</dt>
     <dd> <%= @user.email %> </dd>
     <dt>Pivotal Tracker Token</dt>
-    <dd> <%= hide_token(current_user.pivotal_tracker_token) %></dd>
+    <dd> <%= hide_token(@user.pivotal_tracker_token) %></dd>
 
   <% end %>
 
