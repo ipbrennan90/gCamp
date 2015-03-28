@@ -4,7 +4,7 @@ require 'rails_helper'
   feature 'Projects' do
     before do
       sign_in
-      @project1 = Project.create(name: 'Test Project')
+      new_project
     end
 
 
@@ -18,7 +18,7 @@ require 'rails_helper'
 
     scenario 'User can see a project when clicking on linked name' do
       visit projects_path
-      click_on "Test Project"
+      within("table") {click_on "Test Project"}
       expect(page).to have_content('Test Project')
     end
 

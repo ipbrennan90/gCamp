@@ -19,8 +19,13 @@ def create_users
   password: "#{pass}", password_confirmation: "#{pass}")}
 end
 
+def create_project
+  @project1 = Project.create!(name: 'Test Project')
+end
+
 def new_project
-  @project1 = Project.create(name: 'Test Project')
+  @project1 = Project.create!(name: 'Test Project')
+  @project1.memberships.create!(role:1, user_id: @user.id)
 end
 
 def new_memberships(project)
