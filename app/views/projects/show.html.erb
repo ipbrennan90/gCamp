@@ -16,9 +16,9 @@
   <ul class = "breadcrumb">
     <li> <%= link_to "Projects", projects_path %> / <%= @project.name  %></li>
   </ul>
-    <%= link_to pluralize(@project.tasks.count, "task"), project_tasks_path(@project) %>
+    <%= link_to pluralize(@project.tasks.count, "Task"), project_tasks_path(@project) %>
   <div>
-    <%= link_to pluralize(@project.memberships.count, "membership"), project_memberships_path(@project) %>
+    <%= link_to pluralize(@project.memberships.count, "Membership"), project_memberships_path(@project) %>
   </div>
     <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true%>
     <div class="well">
