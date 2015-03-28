@@ -21,7 +21,7 @@ class UsersController < InternalController
   end
 
   def edit
-    unless current_user.id == @user.id || current_user.permission==ture
+    unless current_user.id == @user.id || current_user.permission==true
       render_404
     end
   end
