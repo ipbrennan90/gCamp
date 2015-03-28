@@ -26,7 +26,7 @@
   <% end %>
 
   <div class="col-md-8">
-  <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id))%>
+  <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true%>
     <div class="well">
       <%= render "form" %>
     </div>
