@@ -21,7 +21,7 @@ class UsersController < InternalController
   end
 
   def edit
-    unless current_user.id == @user.id || current_user.permission==true
+    unless current_user.id == @user.id || current_user.permission==ture
       render_404
     end
   end
@@ -40,8 +40,8 @@ class UsersController < InternalController
 
   def destroy
 
-    @user.destroy
-    session[:user_id] = nil
+    user = User.find(params[:id])
+    user.destroy
     redirect_to users_path
 
 
