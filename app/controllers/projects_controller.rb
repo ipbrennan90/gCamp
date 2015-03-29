@@ -1,3 +1,4 @@
+require_relative "TrackerAPI"
 class ProjectsController < InternalController
   before_action :auth
   before_action :set_project, only: [:edit, :show, :update, :destroy]
@@ -5,8 +6,9 @@ class ProjectsController < InternalController
   before_action :project_owner_auth, only: [:edit, :update, :destroy]
 
   def index
-
     @projects= Project.all
+    @tracker_api = TrackerAPI.new
+    @tracker_projects = @tracker_api.projects(current_user.pivotal_tracker_token)
     @user_projects = []
     @projects.each do |r|
       r.users.cycle(1) {|x| if x.id == current_user.id

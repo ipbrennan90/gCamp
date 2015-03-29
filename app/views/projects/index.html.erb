@@ -35,5 +35,21 @@
       </tr>
     <% end %>
   <% end %>
-
 </table>
+<% if @tracker_projects %>
+  <h1 class = "page-header">
+    Pivotal Tracker Projects
+  </h1>
+  <table class="table">
+    <thead>
+      <th> Name </th>
+    </thead>
+
+    <% @tracker_projects.each do |project| %>
+    <tr>
+    <%= @tracker_api.stories(current_user.pivotal_tracker_token, project[:id]) %>
+      <td><%= link_to project[:name], "https://www.pivotaltracker.com/n/projects/#{project[:id]}" %></td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
