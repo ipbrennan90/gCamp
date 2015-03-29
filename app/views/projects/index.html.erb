@@ -46,7 +46,6 @@
     </thead>
 
     <% @tracker_projects.each do |tracker_project| %>
-    <%= tracker_project %>
       <tr>
         <td><%= link_to tracker_project[:name], "tracker_projects/#{tracker_project[:id]}" %></td>
       </tr>
