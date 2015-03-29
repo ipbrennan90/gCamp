@@ -1,0 +1,28 @@
+
+<h1 class = "page-header">
+  <%= "Stories for #{@tracker_project["name"]}" %>
+</h1>
+<table class="table">
+  <thead>
+    <th> Story </th>
+    <th> Estimate </th>
+    <th> Labels </th>
+    <th> Current State </th>
+  </thead>
+  <% @tracker_api.stories(current_user.pivotal_tracker_token, @tracker_project["id"]).each do |story| %>
+    <tr>
+      <td> <%= link_to "#{story["name"]}", "#{story["url"]}" %></td>
+      <td> <%= story["estimate"] %></td>
+      <td><%story["labels"].each do |label| %>
+            <% if story["labels"].last != label %>
+              <%= "#{label["name"]}, " %>
+            <% else %>
+              <%= "#{label["name"]}" %>
+            <% end %>
+          <% end %>
+      </td>
+      <td> <%= story["current_state"] %>
+    </tr>
+
+  <% end %>
+</table>

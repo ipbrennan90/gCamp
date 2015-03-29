@@ -46,9 +46,8 @@
     </thead>
 
     <% @tracker_projects.each do |project| %>
-    <tr>
-    <%= @tracker_api.stories(current_user.pivotal_tracker_token, project[:id]) %>
-      <td><%= link_to project[:name], "https://www.pivotaltracker.com/n/projects/#{project[:id]}" %></td>
+    <tr>  
+      <td><%= link_to project[:name], "tracker_projects/#{project[:id]}" %></td>
     </tr>
     <% end %>
   </table>

@@ -45,7 +45,6 @@ class ProjectsController < InternalController
       redirect_to @project
     else
       render :edit
-
     end
   end
 
@@ -68,7 +67,6 @@ class ProjectsController < InternalController
 
   def project_owner_auth
     unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1) || current_user.permission == true)
-
       flash[:danger] = "You do not have access"
       redirect_to projects_path
     end
@@ -76,9 +74,8 @@ class ProjectsController < InternalController
 
   def project_auth
     unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true
-
       flash[:danger] = "You do not have access"
-      redirect_to projects_path
+      redirect_to project_path(@project)
     end
   end
 

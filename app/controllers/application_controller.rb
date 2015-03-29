@@ -9,8 +9,6 @@ class ApplicationController < ActionController::Base
 
 
   def store_location
-    # store last url - this is needed for post-login redirect to whatever the user last visited.
-
     if (request.path != sign_in_path &&
         request.path != sign_up_path &&
         request.path != sign_out_path)
@@ -21,7 +19,6 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     session[:previous_url]
   end
-
 
   def current_user
     if session[:user_id].present?
@@ -38,7 +35,6 @@ class ApplicationController < ActionController::Base
 
   def project_owner_auth
     unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1) || current_user.permission == true)
-
       flash[:danger] = "You do not have access"
       redirect_to projects_path
     end
@@ -46,7 +42,6 @@ class ApplicationController < ActionController::Base
 
   def project_auth
     unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true
-
       flash[:danger] = "You do not have access"
       redirect_to projects_path
     end
