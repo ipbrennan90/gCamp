@@ -47,7 +47,7 @@
 
     <% @tracker_projects.each do |project| %>
     <tr>
-      <% id = project["id"] %>
+      <% id = project[:id] %>
       <% name = project[:name] %>
       <td><%= link_to name, "tracker_projects/#{id}" %></td>
     </tr>
