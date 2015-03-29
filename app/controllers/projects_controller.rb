@@ -1,4 +1,4 @@
-require_relative "TrackerAPI"
+
 class ProjectsController < InternalController
   before_action :auth
   before_action :set_project, only: [:edit, :show, :update, :destroy]

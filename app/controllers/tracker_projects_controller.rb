@@ -1,8 +1,8 @@
-require_relative "TrackerAPI"
+
 class TrackerProjectsController < InternalController
 
-  def index
+  def show
     @tracker_api = TrackerAPI.new
-    @tracker_project = @tracker_api.project(current_user.pivotal_tracker_token, params[:project_id])
+    @tracker_project = @tracker_api.project(current_user.pivotal_tracker_token, params[:id])
   end
 end

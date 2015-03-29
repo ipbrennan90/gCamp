@@ -14,9 +14,11 @@ Rails.application.routes.draw do
   post 'sign-in', to: 'authentication#create'
   get 'sign-out', to: 'authentication#destroy'
 
-  get 'tracker_projects/:project_id', to: 'tracker_projects#index'
+
 
   resources :users
+
+  resources :tracker_projects, only: [:show]
 
 
 
