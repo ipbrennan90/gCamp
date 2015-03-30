@@ -10,4 +10,6 @@ describe UsersController do
       expect(assigns(:users)).to eq [user]
     end
   end
+
+  describe 'G'
 end

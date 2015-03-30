@@ -1,5 +1,11 @@
 class User < ActiveRecord::Base
-  validates :first_name, :last_name, :email, :password, :password_confirmation, presence: true
+  attr_accessor :skip_password_validation
+  validates :first_name, :last_name, :email,presence: true
+  unless :skip_password_validation
+    validates :password, :password_confirmation
+  end 
+
+
   validates :email, uniqueness: true
   has_many :memberships, dependent: :destroy
   has_many :comments

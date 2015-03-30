@@ -34,6 +34,7 @@ class ProjectsController < InternalController
   end
 
   def edit
+
   end
 
   def show
@@ -66,14 +67,14 @@ class ProjectsController < InternalController
   end
 
   def project_owner_auth
-    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1) || current_user.permission == true)
+    unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1)) 
       flash[:danger] = "You do not have access"
       redirect_to projects_path
     end
   end
 
   def project_auth
-    unless Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true
+    unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
       flash[:danger] = "You do not have access"
       redirect_to project_path(@project)
     end

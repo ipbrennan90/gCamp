@@ -25,6 +25,7 @@ class UsersController < InternalController
     unless current_user.id == @user.id || current_user.permission==true
       render_404
     end
+    @user.skip_password_validation= true
   end
 
   def show

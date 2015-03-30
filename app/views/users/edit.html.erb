@@ -1,2 +1,50 @@
 <h1 class = "page-header"> Edit User </h1>
-<%= render "form" %>
+<%= form_for @user, html: {class: "form-horizontal"} do |u| %>
+  <%= render partial: "shared/errors", locals: {object: @user} %>
+
+  <% labels_and_field_types = {
+      first_name: :text_field,
+      last_name: :text_field,
+      email: :email_field,
+      pivotal_tracker_token: :text_field
+    } %>
+
+  <% labels_and_field_types.each do |label, field_type| %>
+    <div class="form-group">
+      <div class="col-sm-2 text-right">
+        <%= u.label label, class: "control-label" %>
+      </div>
+      <div class="col-sm-6">
+        <%= u.send(field_type, label, class: 'form-control') %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if current_user.permission==true %>
+    <div class = "form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= u.check_box :permission %>
+        <%= u.label :permission, "Admin" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class = "form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= u.submit class: "btn btn-primary" %>
+      <%= link_to 'Cancel', users_path, class: "btn btn-default" %>
+
+    </div>
+  </div>
+
+<% end %>
+
+<% if params[:action] == "edit" %>
+  <div class = "row">
+      <div class = "col-sm-offset-2 col-sm-4">
+        <div class = "well text-center">
+          <%= link_to "Delete User", user_path(@user), method: :delete,data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
+        </div>
+      </div>
+  </div>
+<% end %>
