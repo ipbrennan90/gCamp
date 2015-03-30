@@ -4,12 +4,10 @@ describe UsersController do
 
   describe 'GET #index' do
     it 'populates an array of users' do
-      user = create_user
-      binding.pry
-      session[:user_id]=user
-      create_users
+      user=User.create!(first_name: "test", last_name: "tested", email: "test@test.com", password: "password", password_confirmation: "password", permission: false, pivotal_tracker_token: "141343ork4o5j5in4o3o33on")
+      session[:user_id]= user.id
       get :index
-      expect(assigns(:users)).to eq [@user1,@user_admin, @usercollection]
+      expect(assigns(:users)).to eq [user]
     end
   end
 end
