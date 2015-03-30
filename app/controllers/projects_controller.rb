@@ -8,7 +8,11 @@ class ProjectsController < InternalController
   def index
     @projects= Project.all
     @tracker_api = TrackerAPI.new
-    @tracker_projects = @tracker_api.projects(current_user.pivotal_tracker_token)
+    if @tracker_api.projects(current_user.pivotal_tracker_token).class==Array
+      @tracker_projects = @tracker_api.projects(current_user.pivotal_tracker_token)
+    else
+      flash[:danger] = "#{@tracker_api.projects(current_user.pivotal_tracker_token)[:error]}"
+    end
     @user_projects = []
     @projects.each do |r|
       r.users.cycle(1) {|x| if x.id == current_user.id
@@ -67,7 +71,7 @@ class ProjectsController < InternalController
   end
 
   def project_owner_auth
-    unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1)) 
+    unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1))
       flash[:danger] = "You do not have access"
       redirect_to projects_path
     end
