@@ -64,9 +64,8 @@ describe UsersController do
   end
 
   describe 'PUT #update' do
-    before do
-      @user=user
-    end
+
+    before {@user=user}
 
     it 'persists valid changes' do
       put :update, id: @user.id,  user: {first_name: "test1"}

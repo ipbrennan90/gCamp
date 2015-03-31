@@ -2,12 +2,11 @@ require 'rails_helper'
 
 describe ProjectsController do
 
-  before do
-    session[:user_id] = user.id
-  end
-
+  before {session[:user_id] = user.id}
   let(:user) {User.create!(first_name: "test", last_name: "tested", email: "test@test.com", password: "password", password_confirmation: "password", permission: false, pivotal_tracker_token: "652dfc58f4f25cd5bfc7ecbd6f303245")}
   let(:project) {Project.create!(name: "ProjectTest")}
+  let(:owner_membership) {Membership.create!(project_id: project.id, user_id: user.id, role: 1) }
+  let(:member_membership) {Membership.create!(project_id: project.id, user_id: user.id, role: 2)}
 
   describe 'GET #index' do
     it 'populates an array of projects' do
@@ -54,7 +53,27 @@ describe ProjectsController do
   end
 
   describe 'GET #edit' do
-    
+    it 'redirects to projects if user not owner' do
+      member_membership
+      get :edit, id: project.id
+      expect(response).to redirect_to(projects_path)
+    end
+
+    it 'finds project to edit if user is owner' do
+      owner_membership
+      get :edit, id: project.id
+      expect(assigns(:project)).to eq(project)
+    end
+  end
+
+  describe 'PUT #update' do
+    before
+    it 'redirects users who are not owners' do
+
+
+
+
+
 
 
 
