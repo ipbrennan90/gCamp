@@ -49,7 +49,7 @@ describe TasksController do
 
   describe 'POST #create' do
 
-    it 'reditects to sign in if user not authorized' do
+    it 'redirects to sign in if user not authorized' do
       session.clear
       post :create, project_id: project.id
       expect(response).to redirect_to(sign_in_path)
@@ -61,6 +61,30 @@ describe TasksController do
       expect(assigns(:task)).to eq Task.find_by_description('testdescription')
     end
 
-    it 'does not persist invalid '
+    it 'does not persist instance of task with invalid params' do
+      task = {description: nil , completed: 'false', due_date: '2015-06-04', project_id: project.id}
+      post :create, project_id: project.id, task: task
+      expect(response).to render_template(:new)
+    end
   end
+
+  describe 'GET #edit' do
+
+    it 'redirects to sign in if user not authorized' do
+      session.clear
+      get :edit, project_id: project.id, id: task.id
+      expect(response).to redirect_to(sign_in_path)
+    end
+
+    it 'redirects user if not project member' do
+      project.memberships.destroy_all
+      task
+      get :edit, project_id: project.id, id: task.id
+      expect(response).to redirect_to(projects_path)
+    end
+
+    it ''
+  end
+
+
 end
