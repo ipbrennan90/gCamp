@@ -29,9 +29,33 @@ describe ProjectsController do
       tracker_projects = @tracker_api.projects("103u419492305u09823r2n4294004inf")
       expect(tracker_projects[:error]).to eq("Invalid authentication credentials were presented.")
     end
-
-    it ''
-
-
   end
+
+  describe 'GET #new' do
+    it 'creates a new instance of project' do
+      project
+      get :new
+      expect(assigns(:project)).to be_a_new(Project)
+    end
+  end
+
+  describe 'POST #create' do
+    it 'persists an instance of project' do \
+      project = {name: "testproject"}
+      post :create, project: project
+      expect(assigns(:project)).to eq Project.find_by_name("testproject")
+    end
+
+    it 'does not persist an invalid project' do
+      project = {name: nil}
+      post :create, project: project
+      expect(response).to render_template(:new)
+    end
+  end
+
+  describe 'GET #edit' do
+    
+
+
+
 end
