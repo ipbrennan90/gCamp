@@ -8,7 +8,7 @@ class TasksController < InternalController
     @tasks= @project.tasks
     @name= @project.name
   end
-
+  
   def new
     @task =  @project.tasks.new
   end

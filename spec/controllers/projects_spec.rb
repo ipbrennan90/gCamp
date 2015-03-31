@@ -39,7 +39,7 @@ describe ProjectsController do
   end
 
   describe 'POST #create' do
-    it 'persists an instance of project' do \
+    it 'persists an instance of project' do
       project = {name: "testproject"}
       post :create, project: project
       expect(assigns(:project)).to eq Project.find_by_name("testproject")
