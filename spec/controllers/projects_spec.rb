@@ -67,14 +67,10 @@ describe ProjectsController do
   end
 
   describe 'PUT #update' do
-    before
     it 'redirects users who are not owners' do
-
-
-
-
-
-
-
+      put :update, id: project.id, project: {name: "ProjectTest1"}
+      expect(response). to redirect_to(projects_path)
+    end
+  end
 
 end
