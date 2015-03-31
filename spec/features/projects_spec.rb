@@ -2,10 +2,11 @@ require 'rails_helper'
 
 
   feature 'Projects' do
-    before do
-      sign_in
-      new_project
-    end
+    before {sign_in(user)}
+    let(:user) {create_user}
+
+    let(:project) {create_project}
+    let!(:owner) {owner_membership}
 
 
     scenario 'User creates a new project' do
@@ -18,12 +19,13 @@ require 'rails_helper'
 
     scenario 'User can see a project when clicking on linked name' do
       visit projects_path
-      within("table") {click_on "Test Project"}
-      expect(page).to have_content('Test Project')
+      find_by_id("project_link").click
+      expect(page).to have_content("#{project.name}")
     end
 
     scenario 'User can edit project' do
-      visit project_path(@project1)
+      project
+      visit project_path(project)
       click_on 'Edit'
       fill_in :project_name, with: 'Newer Project'
       click_on 'Update Project'
@@ -33,7 +35,8 @@ require 'rails_helper'
     end
 
     scenario 'User can delete project' do
-      visit project_path(@project1)
+      project
+      visit project_path(project)
       click_on "Delete"
       expect(page).to have_no_content('Test Project')
     end

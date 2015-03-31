@@ -1,6 +1,6 @@
 class InternalController < ActionController::Base
   helper :all
-  helper_method :current_user, :auth, :find_and_set_project, :find_and_set_user, :match, :owner_count
+  helper_method :project_auth, :current_user, :auth, :find_and_set_project, :find_and_set_user, :match, :owner_count
   before_filter :store_location
 
   def store_location
@@ -48,7 +48,14 @@ class InternalController < ActionController::Base
     project.memberships.where(role:1).count
   end
 
-  
+  def project_auth
+    unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
+      flash[:danger] = "You do not have access"
+      redirect_to project_path(@project)
+    end
+  end
+
+
 
 
 end

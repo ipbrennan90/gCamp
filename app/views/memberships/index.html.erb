@@ -46,8 +46,8 @@
                   <tr>
                       <td><%= link_to m.user.full_name, user_path(m.user), class: "pull-left" %>
 
-
-                      <td><%= f.select(:role, [['Owner',1], ['Member', 2]], {}, {class: 'form-control'}) %></td>
+                        <%= f.label :role, 'role' %>
+                      <td id="update_role"><%= f.select(:role, [['Owner',1], ['Member', 2]], {}, {class: 'form-control'}) %></td>
 
                     <td><%= f.submit 'Update', class: "btn btn-info"  %></td>
                     <% if m.role==1 && owner_count(@project)==1 && m.user==current_user  %>

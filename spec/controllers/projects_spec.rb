@@ -3,10 +3,10 @@ require 'rails_helper'
 describe ProjectsController do
 
   before {session[:user_id] = user.id}
-  let(:user) {User.create!(first_name: "test", last_name: "tested", email: "test@test.com", password: "password", password_confirmation: "password", permission: false, pivotal_tracker_token: "652dfc58f4f25cd5bfc7ecbd6f303245")}
-  let(:project) {Project.create!(name: "ProjectTest")}
-  let(:owner_membership) {Membership.create!(project_id: project.id, user_id: user.id, role: 1) }
-  let(:member_membership) {Membership.create!(project_id: project.id, user_id: user.id, role: 2)}
+  let(:user) {create_user}
+  let(:project) {create_project}
+  let(:owner) { owner_membership }
+  let(:member) {member_membership}
 
   describe 'GET #index' do
     it 'populates an array of projects' do
@@ -54,13 +54,15 @@ describe ProjectsController do
 
   describe 'GET #edit' do
     it 'redirects to projects if user not owner' do
-      member_membership
+      member
       get :edit, id: project.id
       expect(response).to redirect_to(projects_path)
     end
 
     it 'finds project to edit if user is owner' do
-      owner_membership
+      owner
+      user.reload
+      session[:user_id] = user.id
       get :edit, id: project.id
       expect(assigns(:project)).to eq(project)
     end
@@ -68,8 +70,38 @@ describe ProjectsController do
 
   describe 'PUT #update' do
     it 'redirects users who are not owners' do
+      member
       put :update, id: project.id, project: {name: "ProjectTest1"}
       expect(response). to redirect_to(projects_path)
+      expect(project.name).to eq('ProjectTest')
+    end
+
+    it 'persists valid changes for owner' do
+      owner
+      put :update, id: project.id, project: {name: "ProjectTest1"}
+      project.reload
+      expect(project.name).to eq('ProjectTest1')
+    end
+
+    it 'persists valid changes for admin' do
+      user.update_attributes(permission: true)
+      put :update, id: project.id, project: {name: 'ProjectTest2'}
+      project.reload
+      expect(project.name).to eq('ProjectTest2')
+    end
+
+  end
+
+  describe 'DElETE #destroy' do
+    it 'redirects users who are not owners' do
+      member
+      delete :destroy, id: project
+      expect(response). to redirect_to(projects_path)
+    end
+
+    it 'destroys a project if user owner' do
+      owner
+      expect {delete :destroy, id:project}.to change{Project.all.count}.by(-1)
     end
   end
 

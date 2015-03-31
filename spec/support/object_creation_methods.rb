@@ -1,6 +1,5 @@
 def create_user
-  @user = User.create!(first_name: 'first', last_name: 'last', email: 'email@mail.com',
-  password: 'securepass', password_confirmation: 'securepass')
+  User.create!(first_name: "test", last_name: "tested", email: "test@test.com", password: "password", password_confirmation: "password", permission: false, pivotal_tracker_token: "652dfc58f4f25cd5bfc7ecbd6f303245")
 end
 
 def create_user_duo
@@ -20,7 +19,7 @@ def create_users
 end
 
 def create_project
-  @project1 = Project.create!(name: 'Test Project')
+  Project.create!(name: "ProjectTest")
 end
 
 def new_project
@@ -28,8 +27,21 @@ def new_project
   @project1.memberships.create!(role:1, user_id: @user.id)
 end
 
+def owner_membership
+  Membership.create!(project_id: project.id, user_id: user.id, role: 1 )
+end
+
+def member_membership
+  Membership.create!(project_id: project.id, user_id: user.id, role: 2)
+end
+
+
 def new_memberships(project)
   create_user_duo
-  project.memberships.create!(role: 1, project_id: @project1.id, user_id: @user.id )
-  project.memberships.create!(role: 2, project_id: @project1.id, user_id: @user2.id )
+  project.memberships.create!(role: 1, project_id: project.id, user_id: @user.id )
+  project.memberships.create!(role: 2, project_id: project.id, user_id: @user2.id )
+end
+
+def create_task
+  project.tasks.create!(description: 'Test Task', due_date: '2015-06-04')
 end
