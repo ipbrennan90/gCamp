@@ -44,10 +44,40 @@ describe TasksController do
   end
 
   describe 'GET #edit' do
-    it 'finds project' do
+    it 'finds task' do
       get :edit, project_id: project.id, id: task.id
       expect(assigns(:task)).to eq(task)
+    end
 
+  end
+
+  describe 'GET #show' do
+    it 'finds task' do
+      get :edit, project_id: project.id, id: task.id
+      expect(assigns(:task)).to eq(task)
+    end
+  end
+
+  describe 'PUT #update' do
+
+    it 'persists valid changes' do
+      put :update, project_id: project.id, id: task.id, task: {description: "new description"}
+      task.reload
+      expect(task.description).to eq("new description")
+    end
+
+    it 'does not persist invalid changes' do
+      put :update, project_id: project.id, id: task.id, task: {description: nil}
+      task.reload
+      expect(task.description).to eq('Test Task')
+    end
+
+  end
+
+  describe 'DELETE #destroy' do
+    it 'destroys a task' do
+      expect {delete :destroy, project_id: project.id, id: task.id}.to change{Task.all.count}.by(-1)
+    end
   end
 
   describe 'unauthorized users get redirected' do
