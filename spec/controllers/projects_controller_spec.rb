@@ -5,8 +5,8 @@ describe ProjectsController do
   before {session[:user_id] = user.id}
   let(:user) {create_user}
   let(:project) {create_project}
-  let(:owner) { owner_membership }
-  let(:member) {member_membership}
+  let(:owner) { create_membership }
+  let(:member) {create_membership(role: 2)}
 
   describe 'GET #index' do
     it 'populates an array of projects' do

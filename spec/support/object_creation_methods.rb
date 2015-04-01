@@ -1,5 +1,14 @@
-def create_user
-  User.create!(first_name: "test", last_name: "tested", email: "test@test.com", password: "password", password_confirmation: "password", permission: false, pivotal_tracker_token: "652dfc58f4f25cd5bfc7ecbd6f303245")
+def create_user(overrides={})
+  defaults = {
+    first_name: "test",
+    last_name: "tested",
+    email: "test@test.com",
+    password: "password",
+    password_confirmation: "password",
+    permission: false,
+    pivotal_tracker_token: "652dfc58f4f25cd5bfc7ecbd6f303245"
+  }
+  User.create!(defaults.merge(overrides))
 end
 
 def create_user_duo
@@ -27,13 +36,14 @@ def new_project
   @project1.memberships.create!(role:1, user_id: @user.id)
 end
 
-def owner_membership
-  Membership.create!(project_id: project.id, user_id: user.id, role: 1 )
+def create_membership(overrides = {})
+  defaults = {project_id: project.id,
+    user_id: user.id,
+    role: 1 }
+  Membership.create!(defaults.merge(overrides))
 end
 
-def member_membership
-  Membership.create!(project_id: project.id, user_id: user.id, role: 2)
-end
+
 
 
 def new_memberships(project)

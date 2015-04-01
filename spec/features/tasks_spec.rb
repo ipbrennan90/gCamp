@@ -6,7 +6,7 @@ require 'rails_helper'
     before {sign_in(user)}
     let(:user) {create_user}
     let(:project) {create_project}
-    let!(:owner) {owner_membership}
+    let!(:owner) {create_membership}
     let!(:task) {create_task}
 
 

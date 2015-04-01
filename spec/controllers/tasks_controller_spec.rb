@@ -5,7 +5,7 @@ describe TasksController do
   before {session[:user_id] = user.id}
   let(:user) {create_user}
   let(:project) {create_project}
-  let!(:member) {member_membership}
+  let!(:member) {create_membership}
   let!(:task) {create_task}
 
   describe 'GET #index' do
@@ -108,7 +108,7 @@ describe TasksController do
       task
       actions = [:index, :show, :edit, :update, :destroy]
       actions.each do |action|
-        if action== :index || :edit || :show
+        if action== :index || action==:edit || action==:show
           get action, project_id: project.id, id: task.id
         elsif action == :update
           put action, project_id: project.id, id: task.id, task: {description: "description"}

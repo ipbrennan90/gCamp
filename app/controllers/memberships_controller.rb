@@ -2,13 +2,14 @@ class MembershipsController < InternalController
   #before_action :find_and_set_user
   before_action :find_and_set_project
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
-  before_action :project_auth, except: [:show, :new]
+  before_action :project_owner_auth, except: [:show, :new]
 
 
   def index
-    @memberships = @project.memberships
+    @memberships = @project.memberships.all
     @name = @project.name
     @membership = @project.memberships.new
+  end
 
   def new
     @membership = @project.memberships.new
@@ -18,8 +19,10 @@ class MembershipsController < InternalController
     @memberships = @project.memberships
     @membership = @project.memberships.new(membership_params)
     if @membership.save
+
       flash[:notice] = "User has been successfully added"
       redirect_to project_memberships_path(@project.id)
+
     else
       render :index
     end
@@ -62,6 +65,13 @@ class MembershipsController < InternalController
 
   def last_owner
     owner_count(@project) == 1 && @membership.role == 1
+  end
+
+  def project_owner_auth
+    unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1))
+      flash[:danger] = "You do not have access"
+      redirect_to project_path(@project)
+    end
   end
 
 end

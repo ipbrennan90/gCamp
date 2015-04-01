@@ -6,7 +6,7 @@ require 'rails_helper'
     let(:user) {create_user}
 
     let(:project) {create_project}
-    let!(:owner) {owner_membership}
+    let!(:owner) {create_membership}
 
 
     scenario 'User creates a new project' do
