@@ -10,19 +10,6 @@ describe TasksController do
 
   describe 'GET #index' do
 
-    it 'redirects to sign in if user not authorized' do
-      session.clear
-      get :index, project_id: project.id
-      expect(response).to redirect_to(sign_in_path)
-    end
-
-    it 'redirects user if not project member' do
-      project.memberships.destroy_all
-      task
-      get :index, project_id: project.id
-      expect(response).to redirect_to(projects_path)
-    end
-
     it 'populates an array of tasks if member' do
       project
       get :index, project_id: project.id
@@ -34,12 +21,6 @@ describe TasksController do
 
   describe 'GET #new' do
 
-    it 'redirects to sign in if user not authorized' do
-      session.clear
-      get :new, project_id: project.id
-      expect(response).to redirect_to(sign_in_path)
-    end
-
     it 'creates a new instance of task' do
       project
       get :new, project_id: project.id
@@ -48,12 +29,6 @@ describe TasksController do
   end
 
   describe 'POST #create' do
-
-    it 'redirects to sign in if user not authorized' do
-      session.clear
-      post :create, project_id: project.id
-      expect(response).to redirect_to(sign_in_path)
-    end
 
     it 'persists an instance of a task with valid params' do
       task = {description: 'testdescription', completed: 'false', due_date: '2015-06-04', project_id: project.id}
@@ -69,22 +44,53 @@ describe TasksController do
   end
 
   describe 'GET #edit' do
-
-    it 'redirects to sign in if user not authorized' do
-      session.clear
+    it 'finds project' do
       get :edit, project_id: project.id, id: task.id
-      expect(response).to redirect_to(sign_in_path)
+      expect(assigns(:task)).to eq(task)
+
+  end
+
+  describe 'unauthorized users get redirected' do
+
+    it 'redirects unauthorized users to sign in' do
+      session.clear
+      actions = [:index, :new, :create, :edit, :show, :update, :destroy]
+      actions.each do |action|
+        if action== :index || :new || :edit || :show
+          get action, project_id: project.id, id: task.id
+        elsif action == :update
+          put action, project_id: project.id, id: task.id, task: {description: "description"}
+        elsif action == :create
+          post action, project_id: project.id, id: task.id
+        else
+          delete action, project_id: project.id, id: task.id
+        end
+        expect(response).to redirect_to(sign_in_path)
+      end
     end
 
-    it 'redirects user if not project member' do
+  end
+
+  describe 'members get redirected' do
+
+    it 'if action requires user to have owner membership' do
       project.memberships.destroy_all
       task
-      get :edit, project_id: project.id, id: task.id
-      expect(response).to redirect_to(projects_path)
+      actions = [:index, :show, :edit, :update, :destroy]
+      actions.each do |action|
+        if action== :index || :edit || :show
+          get action, project_id: project.id, id: task.id
+        elsif action == :update
+          put action, project_id: project.id, id: task.id, task: {description: "description"}
+        else
+          delete action, project_id: project.id, id: task.id
+        end
+        expect(response).to redirect_to(projects_path)
+      end
     end
 
-    it ''
   end
+
 
 
 end

@@ -52,7 +52,7 @@ class UsersController < InternalController
   private
 
   def hide_token(token)
-    if token != nil
+    unless token.empty?
       asterisk = "*"*(token.length-3)
       hidden_token="#{token[0..3]}#{asterisk}"
       hidden_token
