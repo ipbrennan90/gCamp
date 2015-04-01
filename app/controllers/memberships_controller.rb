@@ -1,15 +1,14 @@
 class MembershipsController < InternalController
   #before_action :find_and_set_user
   before_action :find_and_set_project
-  before_action :set_membership, only: [ :show, :edit, :update, :destroy]
-  before_action :project_auth, only: [:create, :edit, :update, :destroy, :index]
+  before_action :set_membership, only: [:show, :edit, :update, :destroy]
+  before_action :project_auth, except: [:show, :new]
 
 
   def index
     @memberships = @project.memberships
     @name = @project.name
     @membership = @project.memberships.new
-  end
 
   def new
     @membership = @project.memberships.new
@@ -27,7 +26,7 @@ class MembershipsController < InternalController
   end
 
   def update
-    if owner_count(@project) == 1 && @membership.role == 1
+    if last_owner
       flash[:danger] = "Projects must have at least one owner"
       redirect_to project_memberships_path(@project.id)
     elsif @membership.update(membership_params)
@@ -38,7 +37,7 @@ class MembershipsController < InternalController
   end
 
   def destroy
-    if owner_count(@project) == 1 && @membership.role == 1
+    if last_owner
       flash[:danger] = "Projects must have at least one owner"
       redirect_to project_memberships_path(@project.id)
     else
@@ -61,12 +60,8 @@ class MembershipsController < InternalController
     params.require(:membership).permit(:user_id, :project_id, :role)
   end
 
-
-
-
-
-
-
-
+  def last_owner
+    owner_count(@project) == 1 && @membership.role == 1
+  end
 
 end
