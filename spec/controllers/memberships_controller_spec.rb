@@ -87,12 +87,6 @@ describe MembershipsController do
       expect(response).to redirect_to(projects_path)
     end
 
-    it 'because create requires users to be owner' do
-      post :create , project_id: project.id, id: member.id, membership: {user_id: user.id, role: 2}
-
-      expect(response).to redirect_to(project_path(project))
-    end
-
     it 'because update requires users to be owner' do
       put :update, project_id: project.id, id: member.id, membership: {role: 1}
 
