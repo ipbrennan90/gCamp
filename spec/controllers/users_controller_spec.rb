@@ -6,8 +6,8 @@ describe UsersController do
     session[:user_id] = user.id
   end
 
-  let(:user) {User.create!(first_name: "test", last_name: "tested", email: "test@test.com", password: "password", password_confirmation: "password", permission: false, pivotal_tracker_token: "141343ork4o5j5in4o3o33on")}
-  let(:user_hash) {{first_name: "test", last_name: "tested", email: "test@test.com", password: "password", password_confirmation: "password", permission: false, pivotal_tracker_token: "141343ork4o5j5in4o3o33on"}}
+  let(:user) {create_user}
+
 
   describe 'GET #index' do
     it 'populates an array of users' do
@@ -48,7 +48,6 @@ describe UsersController do
 
   describe 'GET #edit' do
     it 'renders 404 if not current user' do
-      user
       not_user = User.create!(first_name: "not", last_name: "user", email: "not_user@test.com", password: "password", password_confirmation: "password", permission: false, pivotal_tracker_token: "141343ork4o5j5in4o3o33on")
       session.clear
       session[:user_id] = not_user.id
@@ -57,37 +56,33 @@ describe UsersController do
     end
 
     it 'finds user to edit' do
-      edit_user= user
-      get :edit, id: edit_user
+      get :edit, id: user
       expect(assigns(:user)).to eq(user)
     end
   end
 
   describe 'PUT #update' do
 
-    before {@user=user}
 
     it 'persists valid changes' do
-      put :update, id: @user.id,  user: {first_name: "test1"}
-      @user.reload
-      expect(@user.first_name).to eq "test1"
+      put :update, id: user.id,  user: {first_name: "test1"}
+      expect(user.reload.first_name).to eq "test1"
     end
 
     it 'does not persist invalid changes' do
-      put :update, id: @user.id, user: {first_name: nil}
-      @user.reload
-      expect(@user.first_name).to eq "test"
+      put :update, id: user.id, user: {first_name: nil}
+      expect(user.reload.first_name).to eq "test"
     end
   end
 
   describe 'DELETE #destroy' do
+    before {user}
     it 'ends session' do
       delete :destroy, id: user
       expect(session[:user_id]).to eq(nil)
     end
 
     it 'destroys user instance' do
-      user
       expect {delete :destroy, id: user}.to change{User.all.count}.by(-1)
     end
   end

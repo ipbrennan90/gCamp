@@ -12,6 +12,7 @@ class ProjectsController < InternalController
       @projects= current_user.projects.all
     end
 
+
     @tracker_api = TrackerAPI.new
     if @tracker_api.projects(current_user.pivotal_tracker_token).class==Array
       @tracker_projects = @tracker_api.projects(current_user.pivotal_tracker_token)

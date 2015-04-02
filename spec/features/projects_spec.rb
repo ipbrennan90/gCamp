@@ -19,7 +19,7 @@ require 'rails_helper'
 
     scenario 'User can see a project when clicking on linked name' do
       visit projects_path
-      find_by_id("project_link").click
+      first(:link, "#{project.name}" ).click
       expect(page).to have_content("#{project.name}")
     end
 

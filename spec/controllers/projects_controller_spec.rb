@@ -9,10 +9,12 @@ describe ProjectsController do
   let(:member) {create_membership(role: 2)}
 
   describe 'GET #index' do
+    before{user}
+    before{member}
+    before{project}
     it 'populates an array of projects' do
-      project
       get :index
-      expect(assigns(:projects)).to eq [project]
+      expect(assigns(:projects)).to eq user.projects
     end
 
     before do
@@ -56,7 +58,7 @@ describe ProjectsController do
     it 'redirects to projects if user not owner' do
       member
       get :edit, id: project.id
-      expect(response).to redirect_to(projects_path)
+      expect(response).to redirect_to(project_path(project))
     end
 
     it 'finds project to edit if user is owner' do
@@ -72,7 +74,7 @@ describe ProjectsController do
     it 'redirects users who are not owners' do
       member
       put :update, id: project.id, project: {name: "ProjectTest1"}
-      expect(response). to redirect_to(projects_path)
+      expect(response). to redirect_to(project_path(project))
       expect(project.name).to eq('ProjectTest')
     end
 
@@ -96,7 +98,7 @@ describe ProjectsController do
     it 'redirects users who are not owners' do
       member
       delete :destroy, id: project
-      expect(response). to redirect_to(projects_path)
+      expect(response). to redirect_to(project_path(project))
     end
 
     it 'destroys a project if user owner' do

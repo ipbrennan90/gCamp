@@ -30,7 +30,7 @@ describe MembershipsController do
     it 'persists an instance of a membership with valid params' do
       member_new = { user_id: user1.id, role: 1}
 
-      post :create, project_id: project.id, membership: member_new
+      post :create, project_id: project.id, id: Membership.last.id, membership: member_new
 
       expect(assigns(:membership)).to eq Membership.last
     end
@@ -39,7 +39,7 @@ describe MembershipsController do
 
       bad_membership = {project_id: nil, user_id: nil, role: nil}
 
-      post :create, project_id: project.id, membership: bad_membership
+      post :create, project_id: project.id, id: Membership.last.id, membership: bad_membership
 
       expect(response).to render_template(:index)
     end
@@ -78,16 +78,17 @@ describe MembershipsController do
   end
 
   describe 'members get redirected' do
-    before{project.memberships.destroy_all}
+    before{owner.destroy}
+    before{member}
 
     it 'because index requires user to have owner membership' do
       get :index, project_id: project.id
 
-      expect(response).to redirect_to(project_path(project))
+      expect(response).to redirect_to(projects_path)
     end
 
     it 'because create requires users to be owner' do
-      post :create , project_id: project.id, id: member.id, membership: {user_id: user1.id, role: 2}
+      post :create , project_id: project.id, id: member.id, membership: {user_id: user.id, role: 2}
 
       expect(response).to redirect_to(project_path(project))
     end
@@ -101,7 +102,7 @@ describe MembershipsController do
     it 'because destroy requires users to be owner' do
       delete :destroy, project_id: project.id, id: member.id
 
-      expect(response).to redirect_to(project_path(project))      
+      expect(response).to redirect_to(project_path(project))
     end
   end
 
