@@ -1,7 +1,7 @@
 class MembershipsController < InternalController
   #before_action :find_and_set_user
   before_action :find_and_set_project
-  before_action :set_membership, only: [:create,:show, :edit, :update, :destroy]
+  before_action :set_membership, only: [:show, :edit, :update, :destroy]
   before_action :project_auth, only: [:index]
   before_action :project_owner_auth, except: [:show, :new, :index]
 
