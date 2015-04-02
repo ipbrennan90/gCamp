@@ -82,42 +82,65 @@ describe TasksController do
 
   describe 'unauthorized users get redirected' do
 
-    it 'redirects unauthorized users to sign in' do
-      session.clear
-      actions = [:index, :new, :create, :edit, :show, :update, :destroy]
+    before {session.clear}
+
+    it 'if get action' do
+
+      actions = [:index, :new, :edit, :show]
       actions.each do |action|
-        if action== :index || :new || :edit || :show
-          get action, project_id: project.id, id: task.id
-        elsif action == :update
-          put action, project_id: project.id, id: task.id, task: {description: "description"}
-        elsif action == :create
-          post action, project_id: project.id, id: task.id
-        else
-          delete action, project_id: project.id, id: task.id
-        end
+        get action, project_id: project.id, id: task.id
+
         expect(response).to redirect_to(sign_in_path)
       end
     end
 
+    it 'if put action' do
+      put :update, project_id: project.id, id: task.id, task: {description: "description"}
+
+      expect(response).to redirect_to(sign_in_path)
+    end
+
+    it 'if post action' do
+      post :create, project_id: project.id, id: task.id
+
+      expect(response).to redirect_to(sign_in_path)
+    end
+
+    it 'if delete action' do
+      delete :destroy, project_id: project.id, id: task.id
+
+      expect(response).to redirect_to(sign_in_path)
+    end
   end
 
-  describe 'members get redirected' do
+  describe 'non-owner members get redirected' do
+    before {project.memberships.destroy_all}
+    before {task}
 
-    it 'if action requires user to have owner membership' do
-      project.memberships.destroy_all
-      task
-      actions = [:index, :show, :edit, :update, :destroy]
+    it 'if  get action' do
+
+      actions = [:index, :show, :edit]
       actions.each do |action|
-        if action== :index || action==:edit || action==:show
-          get action, project_id: project.id, id: task.id
-        elsif action == :update
-          put action, project_id: project.id, id: task.id, task: {description: "description"}
-        else
-          delete action, project_id: project.id, id: task.id
-        end
+        get action, project_id: project.id, id: task.id
+
         expect(response).to redirect_to(projects_path)
       end
     end
+
+    it 'if put action' do
+
+      put :update, project_id: project.id, id: task.id, task: {description: "description"}
+
+      expect(response).to redirect_to(projects_path)
+    end
+
+    it 'if delete action' do
+
+      delete :destroy, project_id: project.id, id: task.id
+
+      expect(response).to redirect_to(projects_path)
+    end
+
 
   end
 
