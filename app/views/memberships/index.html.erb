@@ -39,6 +39,7 @@
         <th></th>
       </thead>
           <% @memberships.each do |m| %>
+
             <% if m.user.present? && m.id.present? %>
               <% if Membership.where("project_id= ? AND role= ?", @project.id, 1).include?(current_user.memberships.find_by(project_id: @project.id)) || current_user.permission == true%>
 

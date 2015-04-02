@@ -50,8 +50,8 @@ class InternalController < ActionController::Base
 
   def project_auth
     unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
-      flash[:danger] = "You do not have access"
-      redirect_to project_path(@project)
+      flash[:danger] = "You do not have access to that project"
+      redirect_to projects_path
     end
   end
 

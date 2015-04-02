@@ -20,21 +20,13 @@
   </thead>
 
 
-  <% if current_user.permission==false %>
-    <% @user_projects.each do |user_project| %>
-      <tr>
-        <td id="project_link"> <%= link_to "#{user_project.name}", project_path(user_project) %> </td>
-        <td> <%= link_to "#{user_project.tasks.count}", project_tasks_path(user_project)  %> </td>
-      </tr>
-    <% end %>
-  <% else %>
+
     <%@projects.each do |project| %>
       <tr>
         <td> <%= link_to "#{project.name}", project_path(project) %> </td>
         <td> <%= link_to project.tasks.count , project_tasks_path(project)  %> </td>
       </tr>
     <% end %>
-  <% end %>
 </table>
 <% if @tracker_projects %>
   <h1 class = "page-header">

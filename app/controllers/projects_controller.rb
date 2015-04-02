@@ -6,7 +6,12 @@ class ProjectsController < InternalController
   before_action :project_owner_auth, only: [:edit, :update, :destroy]
 
   def index
-    @projects= Project.all
+    if current_user.permission==true
+      @projects= Project.all
+    else
+      @projects= current_user.projects.all
+    end
+
     @tracker_api = TrackerAPI.new
     if @tracker_api.projects(current_user.pivotal_tracker_token).class==Array
       @tracker_projects = @tracker_api.projects(current_user.pivotal_tracker_token)
@@ -73,14 +78,14 @@ class ProjectsController < InternalController
   def project_owner_auth
     unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1))
       flash[:danger] = "You do not have access"
-      redirect_to projects_path
+      redirect_to project_path(@project)
     end
   end
 
   def project_auth
     unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(project_id: @project.id))
-      flash[:danger] = "You do not have access"
-      redirect_to project_path(@project)
+      flash[:danger] = "You do not have access to that project"
+      redirect_to projects_path
     end
   end
 

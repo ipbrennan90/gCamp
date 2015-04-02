@@ -2,7 +2,7 @@ class MembershipsController < InternalController
   #before_action :find_and_set_user
   before_action :find_and_set_project
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
-  before_action :project_auth, only: [:show]
+  before_action :project_auth, only: [:index]
   before_action :project_owner_auth, except: [:show, :new, :index]
 
 
@@ -41,11 +41,12 @@ class MembershipsController < InternalController
   end
 
   def destroy
+
     if last_owner
       flash[:danger] = "Projects must have at least one owner"
       redirect_to project_memberships_path(@project.id)
     else
-      membership = Membership.find(params[:id])
+      membership=Membership.find(params[:id])
       membership.destroy
       flash[:notice] = "#{membership.user.full_name} was successfully removed"
       redirect_to projects_path
@@ -69,7 +70,7 @@ class MembershipsController < InternalController
   end
 
   def project_owner_auth
-    unless current_user.permission == true || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1))
+    unless current_user.permission || Membership.where(project_id: @project.id).include?(current_user.memberships.find_by(role: 1)) || current_user.id == @membership.user_id
       flash[:danger] = "You do not have access"
       redirect_to project_path(@project)
     end
