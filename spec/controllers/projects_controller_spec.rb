@@ -3,14 +3,13 @@ require 'rails_helper'
 describe ProjectsController do
 
   before {session[:user_id] = user.id}
-  let(:user) {create_user}
+  let!(:user) {create_user}
   let(:project) {create_project}
   let(:owner) { create_membership }
-  let(:member) {create_membership(role: 2)}
+  let!(:member) {create_membership(role: 2)}
 
   describe 'GET #index' do
-    before{user}
-    before{member}
+
     before{project}
     it 'populates an array of projects' do
       get :index

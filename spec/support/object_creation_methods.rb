@@ -27,8 +27,9 @@ def create_users
   password: "#{pass}", password_confirmation: "#{pass}")}
 end
 
-def create_project
-  Project.create!(name: "ProjectTest")
+def create_project(overrides={})
+  defaults = {name: "ProjectTest"}
+  Project.create!(defaults.merge(overrides))
 end
 
 def new_project

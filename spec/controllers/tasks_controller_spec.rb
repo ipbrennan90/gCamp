@@ -10,8 +10,7 @@ describe TasksController do
 
   describe 'GET #index' do
 
-    it 'populates an array of tasks if member' do
-      project
+    it 'populates an array of tasks' do
       get :index, project_id: project.id
       expect(assigns(:tasks)).to eq [task]
       expect(assigns(:name)).to eq project.name
@@ -22,7 +21,6 @@ describe TasksController do
   describe 'GET #new' do
 
     it 'creates a new instance of task' do
-      project
       get :new, project_id: project.id
       expect(assigns(:task)).to be_a_new(Task)
     end
@@ -31,14 +29,14 @@ describe TasksController do
   describe 'POST #create' do
 
     it 'persists an instance of a task with valid params' do
-      task = {description: 'testdescription', completed: 'false', due_date: '2015-06-04', project_id: project.id}
-      post :create, project_id: project.id, task: task
+      task_hash = {description: 'testdescription', completed: 'false', due_date: '2015-06-04', project_id: project.id}
+      post :create, project_id: project.id, task: task_hash
       expect(assigns(:task)).to eq Task.find_by_description('testdescription')
     end
 
     it 'does not persist instance of task with invalid params' do
-      task = {description: nil , completed: 'false', due_date: '2015-06-04', project_id: project.id}
-      post :create, project_id: project.id, task: task
+      task_hash = {description: nil , completed: 'false', due_date: '2015-06-04', project_id: project.id}
+      post :create, project_id: project.id, task: task_hash
       expect(response).to render_template(:new)
     end
   end
@@ -53,7 +51,7 @@ describe TasksController do
 
   describe 'GET #show' do
     it 'finds task' do
-      get :edit, project_id: project.id, id: task.id
+      get :show , project_id: project.id, id: task.id
       expect(assigns(:task)).to eq(task)
     end
   end
@@ -62,8 +60,7 @@ describe TasksController do
 
     it 'persists valid changes' do
       put :update, project_id: project.id, id: task.id, task: {description: "new description"}
-      task.reload
-      expect(task.description).to eq("new description")
+      expect(task.reload.description).to eq("new description")
     end
 
     it 'does not persist invalid changes' do
