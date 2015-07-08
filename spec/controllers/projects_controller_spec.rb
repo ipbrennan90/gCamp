@@ -59,14 +59,7 @@ describe ProjectsController do
       get :edit, id: project.id
       expect(response).to redirect_to(project_path(project))
     end
-
-    it 'finds project to edit if user is owner' do
-      owner
-      user.reload
-      session[:user_id] = user.id
-      get :edit, id: project.id
-      expect(assigns(:project)).to eq(project)
-    end
+    
   end
 
   describe 'PUT #update' do
@@ -75,13 +68,6 @@ describe ProjectsController do
       put :update, id: project.id, project: {name: "ProjectTest1"}
       expect(response). to redirect_to(project_path(project))
       expect(project.name).to eq('ProjectTest')
-    end
-
-    it 'persists valid changes for owner' do
-      owner
-      put :update, id: project.id, project: {name: "ProjectTest1"}
-      project.reload
-      expect(project.name).to eq('ProjectTest1')
     end
 
     it 'persists valid changes for admin' do
@@ -100,10 +86,7 @@ describe ProjectsController do
       expect(response). to redirect_to(project_path(project))
     end
 
-    it 'destroys a project if user owner' do
-      owner
-      expect {delete :destroy, id:project}.to change{Project.all.count}.by(-1)
-    end
+
   end
 
 end
